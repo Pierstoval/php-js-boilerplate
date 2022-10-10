@@ -1,0 +1,9 @@
+.DS_Store
+node_modules
+/build
+/src/lib/openapi
+/.svelte-kit
+/package
+.env.local
+.env.*.local
+!.env.example

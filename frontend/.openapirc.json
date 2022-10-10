@@ -1,0 +1,4 @@
+{
+	"file": "./build/openapi.json",
+	"outputDir": "./src/lib/openapi/"
+}

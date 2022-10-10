@@ -1,0 +1,46 @@
+version: "3.4"
+
+volumes:
+    db_data:
+
+services:
+    php:
+        build:
+            context: ./docker/php/
+        working_dir: /srv/
+        restart: unless-stopped
+        entrypoint: ["sh", "-c"]
+        volumes: ['./backend/:/srv']
+        command: ['php-fpm8.1']
+
+    caddy:
+        build:
+            context: ./docker/caddy/
+        working_dir: /srv/
+        volumes: ['./backend/:/srv/']
+        ports:
+            - '80:80'
+            - '443:443'
+            - '443:443/udp'
+
+    mailcatcher:
+        build: ./docker/mailcatcher/
+
+    node:
+        build: ./docker/node/
+        working_dir: /srv/
+        restart: unless-stopped
+        ports:
+            - '3000:3000'
+        volumes:
+            - './frontend/:/srv'
+            - './backend/var/openapi/:/srv/build/openapi/'
+        command: ['yarn', 'run', 'dev', '--port', '3000', '--host', '0.0.0.0']
+
+    database:
+        image: 'postgres:14-alpine'
+        working_dir: /srv/
+        volumes: ['db_data:/var/lib/postgresql/data']
+        environment:
+            POSTGRES_PASSWORD: app
+            POSTGRES_USER: app

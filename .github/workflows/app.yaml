@@ -1,0 +1,27 @@
+name: Backend
+
+on:
+    - push
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - run: docker-compose pull
+
+            - name: Docker Layer Caching
+              uses: satackey/action-docker-layer-caching@v0.0.11
+
+            - name: '[Run] Install the project'
+              id: install
+              run: |
+                  make install
+
+            - name: '[Run] 🚀 Test (backend)'
+              run: make test-backend
+
+            - name: '[Run] 🚀 Test (frontend)'
+              run: make test-frontend
