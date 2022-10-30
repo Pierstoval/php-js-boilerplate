@@ -3,11 +3,15 @@
     import type { Book } from '$lib/openapi/schema';
     import {get} from "$lib/openapi";
 
-    let books: Array<Book> = [];
+    /** @type {import('./$types').PageData} */
+    export let data;
+    // let books: Array<Book> = [];
 
     onMount(async () => {
-        const res = await get().apiBooksGetCollection();
-        books = res.data['hydra:member'];
+        if (!data.books) {
+            const res = await get().apiBooksGetCollection();
+            data.books = res.data['hydra:member'];
+        }
     });
 </script>
 
@@ -19,7 +23,7 @@
         <th>Title</th>
         <th>Actions</th>
     </tr>
-    {#each books as book (book.id)}
+    {#each (data.books||[]) as book (book.id)}
         <tr>
             <td>{book.id}</td>
             <td>{book.title}</td>

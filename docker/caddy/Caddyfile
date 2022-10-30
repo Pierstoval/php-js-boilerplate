@@ -1,9 +1,12 @@
 {
 	# Debug
 	debug
+
+	# Allows making calls with no TLS (at least for internal purposes)
+	auto_https disable_redirects
 }
 
-localhost {
+(vhost) {
 	log
 
 	# Root for static files
@@ -40,4 +43,12 @@ localhost {
 	handle {
 		reverse_proxy node:3000
 	}
+}
+
+http://localhost {
+	import vhost
+}
+
+https://localhost {
+	import vhost
 }

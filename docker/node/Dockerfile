@@ -9,9 +9,10 @@ WORKDIR /srv
 
 ENTRYPOINT ["/bin/entrypoint"]
 
-RUN set -xe \
+RUN export DEBIAN_FRONTEND=noninteractive \
+	&& set -xe \
     && apt-get update \
-    && apt-get upgrade -y curl \
+    && apt-get upgrade -y curl ca-certificates \
     && npm -g i npm \
     && chmod a+x /bin/entrypoint \
     \

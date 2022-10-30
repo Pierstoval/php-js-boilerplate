@@ -17,7 +17,9 @@ services:
         build:
             context: ./docker/caddy/
         working_dir: /srv/
-        volumes: ['./backend/:/srv/']
+        volumes:
+            - './backend/:/srv/'
+            - './frontend/build/caddy/:/data/caddy/:ro'
         ports:
             - '80:80'
             - '443:443'
