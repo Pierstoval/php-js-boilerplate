@@ -12,9 +12,11 @@ ENTRYPOINT ["/bin/entrypoint"]
 RUN export DEBIAN_FRONTEND=noninteractive \
 	&& set -xe \
     && apt-get update \
-    && apt-get upgrade -y curl ca-certificates \
+    && apt-get upgrade -y curl \
     && npm -g i npm \
     && chmod a+x /bin/entrypoint \
+    && mkdir /srv/node_modules/ \
+    && chown -R $RUN_USER:$RUN_USER /srv/node_modules/ \
     \
     \
     && `# User management for entrypoint` \

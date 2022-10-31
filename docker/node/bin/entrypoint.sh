@@ -4,13 +4,6 @@ set -e
 uid=$(stat -c %u /srv)
 gid=$(stat -c %g /srv)
 
-# Caddy certificates handling
-# This allows internal HTTP requests to the Caddy container
-if [ -f /srv/build/caddy/pki/authorities/local/root.crt ] && [ ! -f /usr/local/share/ca-certificates/caddy.crt ]; then
-    cp /srv/build/caddy/pki/authorities/local/root.crt /usr/local/share/ca-certificates/caddy.crt
-    update-ca-certificates
-fi
-
 sed -i -r "s/${RUN_USER}:x:\d+:\d+:/${RUN_USER}:x:$uid:$gid:/g" /etc/passwd
 sed -i -r "s/${RUN_USER}:x:\d+:/${RUN_USER}:x:$gid:/g" /etc/group
 

@@ -1,8 +1,8 @@
 {
-	# Debug
-	debug
+	# Debug mode: uncomment if you need it in the Caddy container
+	#debug
 
-	# Allows making calls with no TLS (at least for internal purposes)
+	# Allows making calls with no TLS
 	auto_https disable_redirects
 }
 
@@ -45,10 +45,12 @@
 	}
 }
 
+# vhost for HTTP with port 80
 http://localhost {
 	import vhost
 }
 
+# vhost for HTTPS with port 443
 https://localhost {
 	import vhost
 }

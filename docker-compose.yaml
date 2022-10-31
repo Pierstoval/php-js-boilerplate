@@ -10,20 +10,18 @@ services:
         working_dir: /srv/
         restart: unless-stopped
         entrypoint: ["sh", "-c"]
-        volumes: ['./backend/:/srv']
-        command: ['php-fpm8.1']
+        volumes: ["./backend/:/srv"]
+        command: ["php-fpm8.1"]
 
     caddy:
         build:
             context: ./docker/caddy/
         working_dir: /srv/
-        volumes:
-            - './backend/:/srv/'
-            - './frontend/build/caddy/:/data/caddy/:ro'
+        volumes: ["./backend/:/srv/"]
         ports:
-            - '80:80'
-            - '443:443'
-            - '443:443/udp'
+            - "80:80"
+            - "443:443"
+            - "443:443/udp"
 
     mailcatcher:
         build: ./docker/mailcatcher/
@@ -33,16 +31,16 @@ services:
         working_dir: /srv/
         restart: unless-stopped
         ports:
-            - '3000:3000'
+            - "3000:3000"
         volumes:
-            - './frontend/:/srv'
-            - './backend/var/openapi/:/srv/build/openapi/'
-        command: ['yarn', 'run', 'dev', '--port', '3000', '--host', '0.0.0.0']
+            - "./frontend/:/srv"
+            - "./backend/var/openapi/:/srv/build/openapi/"
+        command: ["yarn", "run", "dev", "--port", "3000", "--host", "0.0.0.0"]
 
     database:
-        image: 'postgres:14-alpine'
+        image: "postgres:14-alpine"
         working_dir: /srv/
-        volumes: ['db_data:/var/lib/postgresql/data']
+        volumes: ["db_data:/var/lib/postgresql/data"]
         environment:
             POSTGRES_PASSWORD: app
             POSTGRES_USER: app

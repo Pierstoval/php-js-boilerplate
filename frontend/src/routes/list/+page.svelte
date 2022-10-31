@@ -1,17 +1,12 @@
 <script lang="ts">
     import {onMount} from "svelte";
-    import type { Book } from '$lib/openapi/schema';
     import {get} from "$lib/openapi";
+    import {type Book} from "$lib/openapi/model";
 
-    /** @type {import('./$types').PageData} */
-    export let data;
-    // let books: Array<Book> = [];
+    let books: Array<Book> = [];
 
-    onMount(async () => {
-        if (!data.books) {
-            const res = await get().apiBooksGetCollection();
-            data.books = res.data['hydra:member'];
-        }
+    onMount(() => {
+        get().apiBooksGetCollection().then(res => books = res.data['hydra:member']);
     });
 </script>
 
@@ -23,7 +18,7 @@
         <th>Title</th>
         <th>Actions</th>
     </tr>
-    {#each (data.books||[]) as book (book.id)}
+    {#each books as book (book.id)}
         <tr>
             <td>{book.id}</td>
             <td>{book.title}</td>
