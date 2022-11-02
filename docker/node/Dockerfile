@@ -30,3 +30,5 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/www/* /var/cache/* /home/.composer/cache
+
+CMD ["yarn", "run", "dev", "--port", "3000", "--host", "0.0.0.0"]

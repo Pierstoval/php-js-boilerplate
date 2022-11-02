@@ -73,13 +73,14 @@ vendor: ## Install PHP vendors
 .PHONY: vendor
 
 node_modules: frontend/yarn.lock ## Install JS vendors
+	mkdir -p frontend/node_modules/
 	$(YARN_RUN) install
 	$(DOCKER_COMPOSE) up -d node
 .PHONY: node_modules
 
 openapi-export: ## Export OpenAPI data to JSON and create a JS client for frontend use
 	$(SF_CONSOLE) --no-interaction api:openapi:export --output=var/openapi/openapi.json
-	$(NODE) mkdir -p build
+	mkdir -p frontend/build
 	cp backend/var/openapi/openapi.json frontend/build/openapi.json
 	$(NODE) rm -rf src/lib/openapi/
 	$(YARN) run orval

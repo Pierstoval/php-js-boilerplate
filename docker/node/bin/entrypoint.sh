@@ -9,7 +9,7 @@ sed -i -r "s/${RUN_USER}:x:\d+:/${RUN_USER}:x:$gid:/g" /etc/group
 
 [[ -f /srv/package.json ]] && chown -R "${RUN_USER}:${RUN_USER}" /srv/package.json
 [[ -f /srv/yarn.lock ]] && chown -R "${RUN_USER}:${RUN_USER}" /srv/yarn.lock
-[[ -d /srv/public/build ]] && chown -R "${RUN_USER}:${RUN_USER}" /srv/public/build
+[[ -d /srv/build ]] && chown -R "${RUN_USER}:${RUN_USER}" /srv/build
 [[ -d /srv/node_modules ]] && chown -R "${RUN_USER}:${RUN_USER}" /srv/node_modules
 
 if [ $# -eq 0 ]; then

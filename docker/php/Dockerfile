@@ -4,6 +4,8 @@ LABEL maintainer="pierstoval@gmail.com"
 
 WORKDIR /srv
 
+CMD ["php-fpm8.1"]
+
 ENV PHP_VERSION=8.1 \
     GOSU_VERSION=1.14 \
     PANTHER_NO_SANDBOX=1 \
@@ -12,6 +14,7 @@ ENV PHP_VERSION=8.1 \
     RUN_USER="_www"
 
 COPY bin/entrypoint.sh /bin/entrypoint
+COPY --from=composer /usr/bin/composer /usr/bin/composer
 
 RUN set -xe \
     && apt-get update \
@@ -45,11 +48,9 @@ RUN set -xe \
         php${PHP_VERSION}-zip \
         php${PHP_VERSION}-xdebug \
     \
-	&& mkdir -p /run/php \
-	&& touch "/var/log/php-fpm-error.log" \
-	&& touch "/var/log/php-fpm-access.log" \
-	\
-    \
+    && mkdir -p /run/php \
+    && touch "/var/log/php-fpm-error.log" \
+    && touch "/var/log/php-fpm-access.log" \
     \
     \
     && `# User management for entrypoint` \
@@ -60,10 +61,6 @@ RUN set -xe \
     && groupadd ${RUN_USER} \
     && adduser --home=/home --shell=/bin/bash --ingroup=${RUN_USER} --disabled-password --quiet --gecos "" --force-badname ${RUN_USER} \
     && chown ${RUN_USER}:${RUN_USER} /home \
-    \
-    \
-    && `# Composer` \
-    && (curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer) \
     \
     \
     && `# Static analysis` \

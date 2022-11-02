@@ -8,10 +8,7 @@ services:
         build:
             context: ./docker/php/
         working_dir: /srv/
-        restart: unless-stopped
-        entrypoint: ["sh", "-c"]
         volumes: ["./backend/:/srv"]
-        command: ["php-fpm8.1"]
 
     caddy:
         build:
@@ -29,13 +26,10 @@ services:
     node:
         build: ./docker/node/
         working_dir: /srv/
-        restart: unless-stopped
         ports:
             - "3000:3000"
         volumes:
             - "./frontend/:/srv"
-            - "./backend/var/openapi/:/srv/build/openapi/"
-        command: ["yarn", "run", "dev", "--port", "3000", "--host", "0.0.0.0"]
 
     database:
         image: "postgres:14-alpine"
