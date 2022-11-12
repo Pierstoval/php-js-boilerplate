@@ -10,7 +10,7 @@ sed -i -r "s/${RUN_USER}:x:\d+:\d+:/${RUN_USER}:x:$uid:$gid:/g" /etc/passwd
 sed -i -r "s/${RUN_USER}:x:\d+:/${RUN_USER}:x:$gid:/g" /etc/group
 
 chown -R "${RUN_USER}:${RUN_USER}" "${HOME}"
-chown -R "${RUN_USER}:${RUN_USER}" "/srv/var/"
+chown -R "${RUN_USER}:${RUN_USER}" "/srv/"
 chown -R "${RUN_USER}:${RUN_USER}" "/run/php"
 find /var/log/ -iname "*php*" -type f -exec chown -R "${RUN_USER}:${RUN_USER}" {} \;
 

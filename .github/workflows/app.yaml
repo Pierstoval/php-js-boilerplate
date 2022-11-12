@@ -14,11 +14,12 @@ jobs:
 
             - name: Docker Layer Caching
               uses: satackey/action-docker-layer-caching@v0.0.11
+              continue-on-error: true
 
             - name: '[Run] Install the project'
               id: install
               run: |
-                  make install
+                  sudo make install
 
             - name: '[Run] 🚀 Test (backend)'
               run: make test-backend

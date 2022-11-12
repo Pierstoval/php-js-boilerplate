@@ -1,13 +1,17 @@
 <script lang="ts">
+	import '../styles/app.scss';
+
 	import TopMenu from '../lib/components/TopMenu.svelte';
 </script>
 
-<TopMenu/>
+<main>
+	<TopMenu/>
 
-<div id="content">
 	<slot></slot>
-</div>
+</main>
 
-<style lang="scss" global>
-	@import '../styles/app.scss';
+<style lang="scss">
+    main {
+      @apply container mx-auto;
+    }
 </style>

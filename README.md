@@ -5,11 +5,12 @@ Contains:
 
 * A PHP/Symfony app with Api Platform for backend
 * A default SvelteKit application for frontend
+* CSS powered by Tailwind
 * An OpenApi spec export/import process to allow frontend client to call the backend API
 
 ## Usage
 
-Run `make install` and visit https://localhost/ .
+Run `make install` and visit [https://localhost/](https://localhost/).
 
 ## HTTP
 

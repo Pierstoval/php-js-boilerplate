@@ -6,7 +6,7 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	let book: Book = null;
+	let book: Book|null = null;
 
 	onMount(() => {
 		if (!data.id) {

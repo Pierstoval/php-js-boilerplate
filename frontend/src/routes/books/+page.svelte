@@ -20,11 +20,24 @@
     </tr>
     {#each books as book (book.id)}
         <tr>
-            <td>{book.id}</td>
+            <td>{book.id.substring(0, 8)}{book.id.length > 8 ? '…' : ''}</td>
             <td>{book.title}</td>
             <td>
-                ...
+                <a href="/books/{book.id}">View</a>
             </td>
         </tr>
     {/each}
 </table>
+
+<style lang="scss">
+    table {
+        @apply table-auto min-w-[30rem];
+        tr th:first-child {
+            @apply w-1/12;
+        }
+        tr th:nth-child(1),
+        tr th:nth-child(2) {
+            @apply w-4/12;
+        }
+    }
+</style>

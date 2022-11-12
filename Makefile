@@ -28,7 +28,7 @@ help: ## Show this help message
 .PHONY: help
 
 install: ## Install and start the project
-install: build node_modules start vendor db openapi-export
+install: build node_modules start e2e-setup vendor db test-db openapi-export
 .PHONY: install
 
 build: ## Build the Docker images
@@ -80,10 +80,11 @@ node_modules: frontend/yarn.lock ## Install JS vendors
 
 openapi-export: ## Export OpenAPI data to JSON and create a JS client for frontend use
 	$(SF_CONSOLE) --no-interaction api:openapi:export --output=var/openapi/openapi.json
-	mkdir -p frontend/build
+	$(DOCKER_COMPOSE_EXEC) node mkdir -p build
+	@$(DOCKER_COMPOSE_EXEC) php chown -R 1000:1000 var # Bit hacky, isn't it... But it should work
+	@$(DOCKER_COMPOSE_EXEC) node chown -R 1000:1000 build # same hack here
 	cp backend/var/openapi/openapi.json frontend/build/openapi.json
-	$(NODE) rm -rf src/lib/openapi/
-	$(YARN) run orval
+	$(YARN_RUN) orval
 .PHONY: openapi-export
 
 ##
@@ -98,6 +99,13 @@ db:
 	$(SF_CONSOLE) --no-interaction doctrine:fixtures:load
 .PHONY: db
 
+test-db:
+	$(SF_CONSOLE) --no-interaction --env=test doctrine:database:drop --force --if-exists
+	$(SF_CONSOLE) --no-interaction --env=test doctrine:database:create
+	$(SF_CONSOLE) --no-interaction --env=test doctrine:migration:migrate
+	$(SF_CONSOLE) --no-interaction --env=test doctrine:fixtures:load
+.PHONY: test-db
+
 test-backend: ## Run backend tests
 	$(PHP) bin/phpunit
 .PHONY: test-backend
@@ -106,6 +114,15 @@ test-backend: ## Run backend tests
 ## Frontend application
 ## --------------------
 ##
+
+assets-build: ## Build frontend as static site
+	$(YARN) build
+.PHONY: assets-build
+
+e2e-setup:
+	$(DOCKER_COMPOSE_EXEC) node yarn playwright install-deps
+	$(NODE) yarn playwright install
+.PHONY: e2e-setup
 
 test-frontend: ## Run frontend tests
 	$(YARN) run test

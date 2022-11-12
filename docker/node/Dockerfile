@@ -1,4 +1,5 @@
-FROM node:16-buster-slim
+# Using ubuntu because playwright isn't compatible with debian.
+FROM ubuntu:22.04
 
 ENV GOSU_VERSION=1.14 \
     RUN_USER="node"
@@ -13,16 +14,20 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 	&& set -xe \
     && apt-get update \
     && apt-get upgrade -y curl \
+    && (curl -fsSL https://deb.nodesource.com/setup_18.x | bash -) \
+    && apt-get install -y nodejs \
     && npm -g i npm \
+    && npm -g i yarn \
     && chmod a+x /bin/entrypoint \
-    && mkdir /srv/node_modules/ \
-    && chown -R $RUN_USER:$RUN_USER /srv/node_modules/ \
     \
     \
     && `# User management for entrypoint` \
     && curl -L -s -o /bin/gosu https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture | awk -F- '{ print $NF }') \
     && chmod +x /bin/gosu \
-    \
+    && mkdir -p /home \
+    && groupadd ${RUN_USER} \
+    && adduser --home=/home --shell=/bin/bash --ingroup=${RUN_USER} --disabled-password --quiet --gecos "" --force-badname ${RUN_USER} \
+    && chown ${RUN_USER}:${RUN_USER} /home \
     \
     && `# Clean apt and remove unused libs/packages to make image smaller` \
     && npm cache clean --force \
