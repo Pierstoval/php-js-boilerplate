@@ -40,11 +40,11 @@ class EntityProvider implements ProviderInterface
             return $processed;
         }
 
-        if ($operation instanceof Get) {
-            $data = $this->managerRegistry->getManagerForClass($entityClass)->find($entityClass, $uriVariables['id']);
-
-            return $this->autoMapper->map($data, $resourceClass);
-        }
+//        if ($operation instanceof Get) {
+//            $data = $this->managerRegistry->getManagerForClass($entityClass)->find($entityClass, $uriVariables['id']);
+//
+//            return $this->autoMapper->map($data, $resourceClass);
+//        }
 
         $data = $this->itemProvider->provide(
             $operation->withClass($entityClass),
