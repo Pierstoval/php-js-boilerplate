@@ -16,7 +16,8 @@ class GetBooksTest extends WebTestCase
             FunctionalTestData::withUrl('/api/books/96ba14a6-f7d3-42fb-b874-548d4d0f55c5')
             ->expectStatusCode(200)
             ->expectJsonParts([
-                'id' => 1,
+                'id' => '96ba14a6-f7d3-42fb-b874-548d4d0f55c5',
+                'title' => 'Test book',
             ])
         );
     }
