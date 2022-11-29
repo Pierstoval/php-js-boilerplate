@@ -24,6 +24,11 @@
 		header Upgrade websocket
 	}
 
+    # Home always served by nodejs
+	handle / {
+		reverse_proxy node:3000
+	}
+
 	# First, proxy websockets to node container
 	handle @websockets {
 		reverse_proxy node:3000
