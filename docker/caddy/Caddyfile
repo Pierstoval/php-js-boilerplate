@@ -16,7 +16,7 @@
 
 	@api `(
 		header({'Accept': ['*application/json*', '*application/ld+json*']})
-		|| path_regexp('(.php|^/(api|_profiler|_wdt|_error))')
+		|| path_regexp('(.php|^/(api|admin|_profiler|_wdt|_error))')
 	)`
 
 	@websockets {

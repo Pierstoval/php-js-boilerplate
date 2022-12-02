@@ -12,6 +12,7 @@
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.13",
+        "easycorp/easyadmin-bundle": "^4.4",
         "jane-php/automapper": "^7.3",
         "jane-php/automapper-bundle": "^7.3",
         "nelmio/cors-bundle": "^2.2",
@@ -95,7 +96,7 @@
     },
     "extra": {
         "symfony": {
-            "allow-contrib": false,
+            "allow-contrib": true,
             "require": "6.1.*",
             "docker": false
         }

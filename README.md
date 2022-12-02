@@ -7,19 +7,26 @@ Contains:
 * A default SvelteKit application for frontend
 * CSS powered by Tailwind
 * An OpenApi spec export/import process to allow frontend client to call the backend API
+* An administration panel powered by EasyAdmin, compatible with DTOs for entity update.
 
 ## Usage
 
-Run `make install` and visit [https://localhost/](https://localhost/).
+Run `make install`.
+
+Then, you can visit the different parts of the app:
+
+* [https://localhost/](https://localhost/) for the frontend app.
+* [https://localhost/api/](https://localhost/api/) for the API.
+* [https://localhost/admin/](https://localhost/admin/) for the administration panel.
 
 ## HTTP
 
 The application is served through several endpoints:
 
 * Static file server.
-* PHP for the API backend server.
+* PHP for the backend server, serving the API and administration panel.
 * Node.js for the SvelteKit frontend server.
-* A WebSocket connection, passed to the frontend server for HMR (Hot Module Replacement).
+* A WebSocket connection, passed to the frontend server for HMR (Hot Module Replacement). This is a behavior that is not present in production mode.
 
 All of these different "backends" are configured using [Caddy](https://caddyserver.com), one of the most modern and customizable HTTP servers.
 
@@ -27,9 +34,12 @@ Check also the [Caddyfile](./docker/caddy/Caddyfile) for details about HTTP rout
 
 ## Backend
 
-The backend app exposes **only** an API through the `/api` endpoint, and it is defined with Api Platform.
+The backend app exposes **only two** endpoints:
 
-You can customize the API like you want, but if you need to change the **HTTP path**, don't forget to check the [Caddyfile](./docker/caddy/Caddyfile) to update HTTP routing.
+* An API through the `/api` endpoint, and it is defined with Api Platform.
+* An administration panel via `/admin`, configured with EasyAdmin.
+
+You can customize the API and admin panel like you want, but if you need to change the **HTTP paths**, don't forget to check the [Caddyfile](./docker/caddy/Caddyfile) to update HTTP routing.
 
 ## Frontend
 

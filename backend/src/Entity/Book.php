@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Form\DTO\AdminBookDTO;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -25,4 +26,8 @@ class Book
         return $this->title;
     }
 
+    public function updateFromAdmin(AdminBookDTO $dto): void
+    {
+        $this->title = $dto->title;
+    }
 }
