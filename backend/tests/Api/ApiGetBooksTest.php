@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Api;
 
 use Pierstoval\SmokeTesting\FunctionalSmokeTester;
 use Pierstoval\SmokeTesting\FunctionalTestData;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class GetBooksTest extends WebTestCase
+class ApiGetBooksTest extends WebTestCase
 {
     use FunctionalSmokeTester;
 
