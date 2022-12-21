@@ -8,6 +8,8 @@ use Orbitale\Component\ArrayFixture\ArrayFixture;
 
 class BookFixtures extends ArrayFixture implements ORMFixtureInterface
 {
+    const BOOK_ID = '96ba14a6-f7d3-42fb-b874-548d4d0f55c5';
+
     protected function getEntityClass(): string
     {
         return Book::class;
@@ -15,6 +17,6 @@ class BookFixtures extends ArrayFixture implements ORMFixtureInterface
 
     protected function getObjects(): iterable
     {
-        yield ['id' => '96ba14a6-f7d3-42fb-b874-548d4d0f55c5', 'title' => 'Test book'];
+        yield ['id' => self::BOOK_ID, 'title' => 'Test book'];
     }
 }
