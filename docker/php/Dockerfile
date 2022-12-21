@@ -74,8 +74,6 @@ RUN set -xe \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/www/* /var/cache/* /home/.composer/cache
 
-EXPOSE 9000
-
 COPY etc/php.ini /etc/php/${PHP_VERSION}/fpm/conf.d/99-custom.ini
 COPY etc/php.ini /etc/php/${PHP_VERSION}/cli/conf.d/99-custom.ini
 COPY etc/fpm.conf /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf

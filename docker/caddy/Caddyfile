@@ -6,7 +6,7 @@
 	auto_https disable_redirects
 }
 
-(vhost) {
+localhost {
 	log
 
 	# Root for static files
@@ -14,22 +14,18 @@
 
 	@file_exists `file({path}) && !path_regexp(".php")`
 
-	@api `(
-		header({'Accept': ['*application/json*', '*application/ld+json*']})
-		|| path_regexp('(.php|^/(api|admin|_profiler|_wdt|_error))')
-	)`
+	@php `path_regexp('(.php|^/(api|admin|_profiler|_wdt|_error))')`
 
 	@websockets {
 		header Connection *Upgrade*
 		header Upgrade websocket
 	}
 
-    # Home always served by nodejs
 	handle / {
 		reverse_proxy node:3000
 	}
 
-	# First, proxy websockets to node container
+	# Proxy websockets to node container
 	handle @websockets {
 		reverse_proxy node:3000
 	}
@@ -40,22 +36,12 @@
 	}
 
 	# If file does not exist, or contains ".php", proxy to PHP
-	handle @api {
-		php_fastcgi php:9000
+	handle @php {
+        php_fastcgi unix//var/run/php/php-fpm.sock
 	}
 
 	# Fall back to node.js application
 	handle {
 		reverse_proxy node:3000
 	}
-}
-
-# vhost for HTTP with port 80
-http://localhost {
-	import vhost
-}
-
-# vhost for HTTPS with port 443
-https://localhost {
-	import vhost
 }
