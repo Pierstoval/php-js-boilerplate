@@ -46,7 +46,7 @@
         "symfony/dom-crawler": "6.1.*",
         "symfony/phpunit-bridge": "^6.1",
         "symfony/var-dumper": "6.1.*",
-        "symfony/web-profiler-bundle": "6.1.*"
+        "symfony/web-profiler-bundle": "6.2.*"
     },
     "config": {
         "allow-plugins": {
