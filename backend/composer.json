@@ -42,7 +42,7 @@
         "phpunit/phpunit": "^9.5",
         "pierstoval/smoke-testing": "^0.4.1",
         "symfony/browser-kit": "6.1.*",
-        "symfony/css-selector": "6.1.*",
+        "symfony/css-selector": "6.2.*",
         "symfony/dom-crawler": "6.1.*",
         "symfony/phpunit-bridge": "^6.1",
         "symfony/var-dumper": "6.1.*",
