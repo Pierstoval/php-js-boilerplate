@@ -2,14 +2,14 @@
 
 namespace App\ApiResource;
 
+use ApiPlatform\Doctrine\Orm\State\Options as DoctrineORMOptions;
 use ApiPlatform\Metadata as Api;
 use App\Entity\Book as BookEntity;
-use App\State\EntityProvider;
 
 #[Api\ApiResource(
     operations: [
-        new Api\Get(provider: EntityProvider::class, extraProperties: ['entityClass' => BookEntity::class]),
-        new Api\GetCollection(provider: EntityProvider::class, extraProperties: ['entityClass' => BookEntity::class]),
+        new Api\Get(stateOptions: new DoctrineORMOptions(entityClass: BookEntity::class)),
+        new Api\GetCollection(stateOptions: new DoctrineORMOptions(entityClass: BookEntity::class)),
     ],
 )]
 class Book
