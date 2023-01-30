@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8ddc092715d3ca99e102f0a887ff8b0a",
+    "content-hash": "b4233e1436c4295266a5beddd01b81b5",
     "packages": [
         {
             "name": "api-platform/core",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/core.git",
-                "reference": "ccc9ed86376fc32f0cdda4edd8705eb577e8d92c"
+                "reference": "9fb9b0addcdec84f257505863e6ae7073df15a60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/core/zipball/ccc9ed86376fc32f0cdda4edd8705eb577e8d92c",
-                "reference": "ccc9ed86376fc32f0cdda4edd8705eb577e8d92c",
+                "url": "https://api.github.com/repos/api-platform/core/zipball/9fb9b0addcdec84f257505863e6ae7073df15a60",
+                "reference": "9fb9b0addcdec84f257505863e6ae7073df15a60",
                 "shasum": ""
             },
             "require": {
@@ -166,7 +166,7 @@
             ],
             "support": {
                 "issues": "https://github.com/api-platform/core/issues",
-                "source": "https://github.com/api-platform/core/tree/v3.1.0"
+                "source": "https://github.com/api-platform/core/tree/v3.1.1"
             },
             "funding": [
                 {
@@ -174,7 +174,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-01-23T15:40:21+00:00"
+            "time": "2023-01-27T10:41:37+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -2092,16 +2092,16 @@
         },
         {
             "name": "phpstan/phpdoc-parser",
-            "version": "1.15.3",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpdoc-parser.git",
-                "reference": "61800f71a5526081d1b5633766aa88341f1ade76"
+                "reference": "57090cfccbfaa639e703c007486d605a6e80f56d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/61800f71a5526081d1b5633766aa88341f1ade76",
-                "reference": "61800f71a5526081d1b5633766aa88341f1ade76",
+                "url": "https://api.github.com/repos/phpstan/phpdoc-parser/zipball/57090cfccbfaa639e703c007486d605a6e80f56d",
+                "reference": "57090cfccbfaa639e703c007486d605a6e80f56d",
                 "shasum": ""
             },
             "require": {
@@ -2131,9 +2131,9 @@
             "description": "PHPDoc parser with support for nullable, intersection and generic types",
             "support": {
                 "issues": "https://github.com/phpstan/phpdoc-parser/issues",
-                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.15.3"
+                "source": "https://github.com/phpstan/phpdoc-parser/tree/1.16.0"
             },
-            "time": "2022-12-20T20:56:55+00:00"
+            "time": "2023-01-29T14:41:23+00:00"
         },
         {
             "name": "psr/cache",
@@ -8150,26 +8150,27 @@
         },
         {
             "name": "pierstoval/smoke-testing",
-            "version": "v0.4.4",
+            "version": "v0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/SmokeTesting.git",
-                "reference": "ceff1735f817ff58ab3059a2fd0941ab313eb200"
+                "reference": "1c73e6e62c5dd40a3af1b252ea14c7a89320dbde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/SmokeTesting/zipball/ceff1735f817ff58ab3059a2fd0941ab313eb200",
-                "reference": "ceff1735f817ff58ab3059a2fd0941ab313eb200",
+                "url": "https://api.github.com/repos/Pierstoval/SmokeTesting/zipball/1c73e6e62c5dd40a3af1b252ea14c7a89320dbde",
+                "reference": "1c73e6e62c5dd40a3af1b252ea14c7a89320dbde",
                 "shasum": ""
             },
             "require": {
-                "php": ">= 8.1",
-                "symfony/framework-bundle": "^6.1"
+                "php": "^7.4|^8.0",
+                "symfony/framework-bundle": "^5.4|^6.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.5"
+                "phpunit/phpunit": "^9.5",
+                "symfony/maker-bundle": "^1.43"
             },
-            "type": "library",
+            "type": "symfony-bundle",
             "autoload": {
                 "psr-4": {
                     "Pierstoval\\SmokeTesting\\": "src/"
@@ -8188,9 +8189,9 @@
             "description": "Smoke testing automator for Symfony applications",
             "support": {
                 "issues": "https://github.com/Pierstoval/SmokeTesting/issues",
-                "source": "https://github.com/Pierstoval/SmokeTesting/tree/v0.4.4"
+                "source": "https://github.com/Pierstoval/SmokeTesting/tree/v0.6.0"
             },
-            "time": "2022-11-29T19:48:47+00:00"
+            "time": "2023-01-25T19:19:45+00:00"
         },
         {
             "name": "sebastian/cli-parser",
