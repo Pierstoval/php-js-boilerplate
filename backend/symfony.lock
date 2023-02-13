@@ -107,6 +107,9 @@
             "tests/bootstrap.php"
         ]
     },
+    "pierstoval/smoke-testing": {
+        "version": "v0.6.0"
+    },
     "symfony/console": {
         "version": "6.1",
         "recipe": {
