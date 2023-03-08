@@ -8150,16 +8150,16 @@
         },
         {
             "name": "pierstoval/smoke-testing",
-            "version": "v0.6.0",
+            "version": "v0.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Pierstoval/SmokeTesting.git",
-                "reference": "1c73e6e62c5dd40a3af1b252ea14c7a89320dbde"
+                "reference": "8096be3d1900d45011c850d766fab5d8383c9268"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Pierstoval/SmokeTesting/zipball/1c73e6e62c5dd40a3af1b252ea14c7a89320dbde",
-                "reference": "1c73e6e62c5dd40a3af1b252ea14c7a89320dbde",
+                "url": "https://api.github.com/repos/Pierstoval/SmokeTesting/zipball/8096be3d1900d45011c850d766fab5d8383c9268",
+                "reference": "8096be3d1900d45011c850d766fab5d8383c9268",
                 "shasum": ""
             },
             "require": {
@@ -8167,7 +8167,7 @@
                 "symfony/framework-bundle": "^5.4|^6.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^9.5",
+                "phpunit/phpunit": "^9.5|^10.0",
                 "symfony/maker-bundle": "^1.43"
             },
             "type": "symfony-bundle",
@@ -8189,9 +8189,9 @@
             "description": "Smoke testing automator for Symfony applications",
             "support": {
                 "issues": "https://github.com/Pierstoval/SmokeTesting/issues",
-                "source": "https://github.com/Pierstoval/SmokeTesting/tree/v0.6.0"
+                "source": "https://github.com/Pierstoval/SmokeTesting/tree/v0.6.2"
             },
-            "time": "2023-01-25T19:19:45+00:00"
+            "time": "2023-03-08T11:03:43+00:00"
         },
         {
             "name": "sebastian/cli-parser",
