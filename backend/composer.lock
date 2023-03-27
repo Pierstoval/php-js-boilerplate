@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "api-platform/core",
-            "version": "v3.1.4",
+            "version": "v3.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/core.git",
-                "reference": "693fd445c8648e9d6a37943b36675fe129324b10"
+                "reference": "a7f4e0bab83640c1e7bc17eb40c18a9729770554"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/core/zipball/693fd445c8648e9d6a37943b36675fe129324b10",
-                "reference": "693fd445c8648e9d6a37943b36675fe129324b10",
+                "url": "https://api.github.com/repos/api-platform/core/zipball/a7f4e0bab83640c1e7bc17eb40c18a9729770554",
+                "reference": "a7f4e0bab83640c1e7bc17eb40c18a9729770554",
                 "shasum": ""
             },
             "require": {
@@ -166,7 +166,7 @@
             ],
             "support": {
                 "issues": "https://github.com/api-platform/core/issues",
-                "source": "https://github.com/api-platform/core/tree/v3.1.4"
+                "source": "https://github.com/api-platform/core/tree/v3.1.6"
             },
             "funding": [
                 {
@@ -174,7 +174,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-03-10T09:41:39+00:00"
+            "time": "2023-03-24T16:45:10+00:00"
         },
         {
             "name": "doctrine/annotations",
