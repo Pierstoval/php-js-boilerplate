@@ -1,7 +1,7 @@
 name: Nightly update
 on:
     schedule:
-        - cron: "* * * * *"
+        - cron: "0 0 * * *"
 
 jobs:
     update_routes:
