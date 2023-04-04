@@ -1,7 +1,7 @@
 name: Nightly update
 on:
     schedule:
-        - cron: "0 0 * * *"
+        - cron: "* * * * *"
 
 jobs:
     update_routes:
@@ -22,7 +22,7 @@ jobs:
                   Github-Action-based Automated dependencies update.
                     
                   Check the `.github/workflows/update.yaml` file to see how it works.
-                branch: "main"
+                branch: "auto_updates"
                 commit-message: "Automated dependencies update"
                 auto-merge: squash
                 update-pull-request-title-and-body: false
