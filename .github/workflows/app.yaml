@@ -1,7 +1,12 @@
 name: Backend
 
 on:
-    - push
+    push:
+        branches: ["*"]
+    workflow_run:
+        workflows: ["Nightly update"]
+        types:
+            - completed
 
 jobs:
     build:
