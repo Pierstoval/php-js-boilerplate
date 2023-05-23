@@ -3,10 +3,8 @@ name: Application CI
 on:
     push:
         branches: ["*"]
-    workflow_run:
-        workflows: ["Nightly update"]
-        types:
-            - completed
+    schedule:
+        - cron: "0 0 * * *"
 
 jobs:
     build:
