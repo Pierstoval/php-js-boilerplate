@@ -72,7 +72,7 @@ vendor: ## Install PHP vendors
 	$(COMPOSER) install
 .PHONY: vendor
 
-node_modules: frontend/yarn.lock ## Install JS vendors
+node_modules: ## Install JS vendors
 	mkdir -p frontend/node_modules/
 	$(YARN_RUN) install
 	$(DOCKER_COMPOSE) up -d node
