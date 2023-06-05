@@ -19,7 +19,7 @@
         "symfony/asset": "6.2.*",
         "symfony/console": "6.2.*",
         "symfony/dotenv": "6.2.*",
-        "symfony/expression-language": "6.2.*",
+        "symfony/expression-language": "6.3.*",
         "symfony/flex": "^2",
         "symfony/framework-bundle": "6.2.*",
         "symfony/mailer": "6.2.*",
