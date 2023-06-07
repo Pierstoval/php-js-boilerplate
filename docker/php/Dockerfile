@@ -64,7 +64,7 @@ RUN set -xe \
     \
     \
     && `# Static analysis` \
-    && curl -L https://cs.symfony.com/download/php-cs-fixer-v2.phar -o /usr/local/bin/php-cs-fixer && chmod a+x /usr/local/bin/php-cs-fixer \
+    && curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o /usr/local/bin/php-cs-fixer && chmod a+x /usr/local/bin/php-cs-fixer \
     \
     \
     && `# Clean apt and remove unused libs/packages to make image smaller` \
