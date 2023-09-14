@@ -7,7 +7,7 @@ Contains:
 * A default SvelteKit application for frontend
 * CSS powered by Tailwind
 * An OpenApi spec export/import process to allow frontend client to call the backend API
-* An administration panel powered by EasyAdmin, compatible with DTOs for entity update.
+* An administration panel powered by EasyAdmin
 
 ## Create a new project
 

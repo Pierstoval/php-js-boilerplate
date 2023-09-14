@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
-use App\Form\DTO\AdminBookDTO;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
 #[ORM\Table(name: "books")]
@@ -16,6 +16,11 @@ class Book
     #[ORM\Column(name: "title", type: "string", nullable: false)]
     private string $title;
 
+    public function __construct()
+    {
+        $this->id = (string) Uuid::v7();
+    }
+
     public function getId(): string
     {
         return $this->id;
@@ -26,8 +31,8 @@ class Book
         return $this->title;
     }
 
-    public function updateFromAdmin(AdminBookDTO $dto): void
+    public function setTitle(?string $title): void
     {
-        $this->title = $dto->title;
+        $this->title = $title ?: '';
     }
 }

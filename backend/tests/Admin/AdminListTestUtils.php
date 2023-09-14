@@ -55,6 +55,7 @@ trait AdminListTestUtils
     {
         $url = \sprintf('/admin?crudAction=%s&crudControllerFqcn=%s', $action, $crudController);
 
-        return FunctionalTestData::withUrl($url);
+        return FunctionalTestData::withUrl($url)
+            ->appendCallableExpectation(fn($_, Crawler $crawler) => $this->setCrawler($crawler));
     }
 }
