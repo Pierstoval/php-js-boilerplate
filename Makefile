@@ -33,11 +33,11 @@ install: build node_modules start e2e-setup vendor db test-db openapi-export
 
 build: ## Build the Docker images
 	@$(DOCKER_COMPOSE) pull --include-deps
-	@$(DOCKER_COMPOSE) build --force-rm --compress
+	@$(DOCKER_COMPOSE) build --compress
 .PHONY: build
 
 start: ## Start all containers and the PHP server
-	@$(DOCKER_COMPOSE) up -d --remove-orphans --no-recreate
+	@$(DOCKER_COMPOSE) up -d --remove-orphans
 .PHONY: start
 
 stop: ## Stop all containers and the PHP server
