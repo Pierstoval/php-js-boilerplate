@@ -1,6 +1,5 @@
 import {defineConfig} from 'orval';
 
-
 export default defineConfig({
 	applicationApi: {
 		input: './build/openapi.json',
