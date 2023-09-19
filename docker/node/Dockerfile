@@ -2,7 +2,7 @@
 FROM ubuntu:22.04
 
 ENV GOSU_VERSION=1.16 \
-    NODE_VERSION=1.18 \
+    NODE_VERSION=18 \
     RUN_USER="node"
 
 COPY bin/entrypoint.sh /bin/entrypoint
@@ -12,14 +12,17 @@ WORKDIR /srv
 ENTRYPOINT ["/bin/entrypoint"]
 
 RUN export DEBIAN_FRONTEND=noninteractive \
-	&& set -xe \
+    && set -xe \
     && apt-get update \
     && apt-get upgrade -y curl \
+    && chmod a+x /bin/entrypoint \
+    \
+    \
+    && `# Install Node.js` \
     && (curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -) \
     && apt-get install -y nodejs \
     && npm -g i npm \
     && npm -g i yarn \
-    && chmod a+x /bin/entrypoint \
     \
     \
     && `# User management for entrypoint` \
