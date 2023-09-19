@@ -1,21 +1,30 @@
+# Custom project config
 
-_WARN := "\033[33m[%s]\033[0m %s\n"  # Yellow text for "printf"
-_TITLE := "\033[32m[%s]\033[0m %s\n" # Green text for "printf"
-_ERROR := "\033[31m[%s]\033[0m %s\n" # Red text for "printf"
+PHP_CONTAINER_NAME    ?= php
+PHP_APP_DIR           ?= backend
+NODE_CONTAINER_NAME   ?= node
+NODE_APP_DIR          ?= frontend
+NODE_PKG_MANAGER_NAME ?= yarn
+
+# --------------
+
+_WARN := "\033[33m[WARNING]\033[0m %s\n"  # Yellow text for "printf"
+_INFO := "\033[32m[INFO]\033[0m %s\n" # Green text for "printf"
+_ERROR := "\033[31m[ERROR]\033[0m %s\n" # Red text for "printf"
 
 SHELL=bash
 
-DOCKER               ?= docker
-DOCKER_COMPOSE       ?= docker-compose
-DOCKER_COMPOSE_EXEC  ?= $(DOCKER_COMPOSE) exec -T
-DOCKER_COMPOSE_RUN   ?= $(DOCKER_COMPOSE) run --rm
+DOCKER                ?= docker
+DOCKER_COMPOSE        ?= docker-compose
+DOCKER_COMPOSE_EXEC   ?= $(DOCKER_COMPOSE) exec -T
+DOCKER_COMPOSE_RUN    ?= $(DOCKER_COMPOSE) run --rm
 
-PHP                  ?= $(DOCKER_COMPOSE_EXEC) php entrypoint
-COMPOSER             ?= $(DOCKER_COMPOSE_RUN) php composer
-SF_CONSOLE           ?= $(PHP) bin/console
-NODE                 ?= $(DOCKER_COMPOSE_EXEC) node entrypoint
-YARN                 ?= $(NODE) yarn
-YARN_RUN             ?= $(DOCKER_COMPOSE_RUN) node yarn
+PHP                   ?= $(DOCKER_COMPOSE_EXEC) $(PHP_CONTAINER_NAME) entrypoint
+COMPOSER              ?= $(DOCKER_COMPOSE_RUN) $(PHP_CONTAINER_NAME) composer
+SF_CONSOLE            ?= $(PHP) bin/console
+NODE                  ?= $(DOCKER_COMPOSE_EXEC) $(NODE_CONTAINER_NAME) entrypoint
+NODE_PKG_MANAGER      ?= $(NODE) $(NODE_PKG_MANAGER_NAME)
+NODE_PKG_MANAGER_RUN  ?= $(DOCKER_COMPOSE_RUN) --no-deps $(NODE_CONTAINER_NAME) $(NODE_PKG_MANAGER_NAME)
 
 ##
 ## Project
@@ -32,7 +41,6 @@ install: build node_modules start e2e-setup vendor db test-db openapi-export
 .PHONY: install
 
 build: ## Build the Docker images
-	@$(DOCKER_COMPOSE) pull --include-deps
 	@$(DOCKER_COMPOSE) build --compress
 .PHONY: build
 
@@ -73,18 +81,19 @@ vendor: ## Install PHP vendors
 .PHONY: vendor
 
 node_modules: ## Install JS vendors
-	mkdir -p frontend/node_modules/
-	$(YARN_RUN) install
-	$(DOCKER_COMPOSE) up -d node
+	mkdir -p $(NODE_APP_DIR)/node_modules/
+	$(NODE_PKG_MANAGER_RUN) install
+	$(DOCKER_COMPOSE) up -d $(NODE_CONTAINER_NAME)
 .PHONY: node_modules
 
 openapi-export: ## Export OpenAPI data to JSON and create a JS client for frontend use
 	$(SF_CONSOLE) --no-interaction api:openapi:export --output=var/openapi/openapi.json
-	$(DOCKER_COMPOSE_EXEC) node mkdir -p build
-	@$(DOCKER_COMPOSE_EXEC) php chown -R 1000:1000 var # Bit hacky, isn't it... But it should work
-	@$(DOCKER_COMPOSE_EXEC) node chown -R 1000:1000 build # same hack here
-	cp backend/var/openapi/openapi.json frontend/build/openapi.json
-	$(YARN_RUN) orval
+	$(DOCKER_COMPOSE_EXEC) $(NODE_CONTAINER_NAME) mkdir -p build
+	@$(DOCKER_COMPOSE_EXEC) $(PHP_CONTAINER_NAME) chown -R 1000:1000 var # Bit hacky, isn't it... But it should work
+	@$(DOCKER_COMPOSE_EXEC) $(NODE_CONTAINER_NAME) chown -R 1000:1000 build # same hack here
+	cp $(PHP_APP_DIR)/var/openapi/openapi.json \
+		$(NODE_APP_DIR)/build/openapi.json
+	$(NODE_PKG_MANAGER_RUN) orval
 .PHONY: openapi-export
 
 ##
@@ -116,16 +125,16 @@ test-backend: ## Run backend tests
 ##
 
 assets-build: ## Build frontend as static site
-	$(YARN) build
+	$(NODE_PKG_MANAGER) build
 .PHONY: assets-build
 
 e2e-setup:
-	$(DOCKER_COMPOSE_EXEC) node yarn playwright install-deps
-	$(NODE) yarn playwright install
+	$(DOCKER_COMPOSE_EXEC) $(NODE_CONTAINER_NAME) $(NODE_PKG_MANAGER_NAME) run playwright install-deps
+	$(NODE) $(NODE_PKG_MANAGER_NAME) run playwright install
 .PHONY: e2e-setup
 
 test-frontend: ## Run frontend tests
-	$(YARN) run test
+	$(NODE_PKG_MANAGER) run test
 .PHONY: test-frontend
 
 ##
