@@ -1,7 +1,8 @@
 # Using ubuntu because playwright isn't compatible with debian.
 FROM ubuntu:22.04
 
-ENV GOSU_VERSION=1.14 \
+ENV GOSU_VERSION=1.16 \
+    NODE_VERSION=1.18 \
     RUN_USER="node"
 
 COPY bin/entrypoint.sh /bin/entrypoint
@@ -14,7 +15,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
 	&& set -xe \
     && apt-get update \
     && apt-get upgrade -y curl \
-    && (curl -fsSL https://deb.nodesource.com/setup_18.x | bash -) \
+    && (curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -) \
     && apt-get install -y nodejs \
     && npm -g i npm \
     && npm -g i yarn \
@@ -29,9 +30,10 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && adduser --home=/home --shell=/bin/bash --ingroup=${RUN_USER} --disabled-password --quiet --gecos "" --force-badname ${RUN_USER} \
     && chown ${RUN_USER}:${RUN_USER} /home \
     \
+    \
     && `# Clean apt and remove unused libs/packages to make image smaller` \
     && npm cache clean --force \
-    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false $BUILD_LIBS \
+    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/www/* /var/cache/* /home/.composer/cache
