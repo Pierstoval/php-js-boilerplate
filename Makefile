@@ -66,13 +66,9 @@ reset: kill install
 
 clean: ## Stop the project and remove generated files and configuration
 clean: kill
-	rm -rf \
-		backend/vendor \
-		backend/var/cache/* \
-		backend/var/log/* \
-		backend/var/sessions/* \
-		frontend/node_modules \
-		frontend/build \
+	git clean --force -d -x -- \
+		$(PHP_APP_DIR)/ \
+		$(NODE_APP_DIR)/ \
 
 .PHONY: clean
 
