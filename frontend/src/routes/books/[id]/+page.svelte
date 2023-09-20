@@ -1,25 +1,32 @@
 <script lang="ts">
 	import {onMount} from "svelte";
+	import {page} from '$app/stores';
 	import {get} from "$lib/openapi";
 	import {type Book} from "$lib/openapi/model";
 
-	/** @type {import('./$types').PageData} */
-	export let data;
+	let id = $page.params['id'];
 
 	let book: Book|null = null;
 
+    let finished_loading = false;
+
 	onMount(() => {
-		if (!data.id) {
-			return;
-		}
-		get().apiBooksIdGet(data.id).then(res => book = res.data);
+		if (!id) return;
+		get().apiBooksIdGet(id).then(res => book = res.data);
+
+        finished_loading = true;
 	});
 </script>
 
-{#if !book}
-	...
+{#if book === null}
+    {#if finished_loading}
+        No book found...
+    {:else}
+	    Loading...
+    {/if}
 {:else}
-	<h1>Book {book.title}</h1>
+	<h1>Book: <strong>{book.title}</strong></h1>
 
-	<span>Id: {book.id}</span>
+	<span>Id: <small>{book.id}</small></span>
 {/if}
+
