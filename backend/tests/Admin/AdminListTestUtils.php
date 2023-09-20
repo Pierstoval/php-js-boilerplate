@@ -17,10 +17,7 @@ trait AdminListTestUtils
     private function getCrawler(): Crawler
     {
         if (!isset($this->crawler)) {
-            throw new \RuntimeException('Crawler has not been set.'."\n"
-                .'You must set it in the tester via this kind of code:'."\n"
-                .'$testData->appendCallableExpectation(fn($_, Crawler $crawler) => $this->setCrawler($crawler))'
-            );
+            throw new \RuntimeException('Crawler has not been set.'."\n".'You must set it in the tester via this kind of code:'."\n".'$testData->appendCallableExpectation(fn($_, Crawler $crawler) => $this->setCrawler($crawler))');
         }
 
         return $this->crawler;
@@ -41,7 +38,7 @@ trait AdminListTestUtils
         $this->assertSame($expectedValue,
             $this->getTableList()
                 ->eq($elementIndex)
-                ->filter(\sprintf("td[data-label=\"%s\"]", $fieldName))
+                ->filter(\sprintf('td[data-label="%s"]', $fieldName))
                 ->text()
         );
     }
@@ -56,6 +53,6 @@ trait AdminListTestUtils
         $url = \sprintf('/admin?crudAction=%s&crudControllerFqcn=%s', $action, $crudController);
 
         return FunctionalTestData::withUrl($url)
-            ->appendCallableExpectation(fn($_, Crawler $crawler) => $this->setCrawler($crawler));
+            ->appendCallableExpectation(fn ($_, Crawler $crawler) => $this->setCrawler($crawler));
     }
 }

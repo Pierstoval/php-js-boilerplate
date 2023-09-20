@@ -6,14 +6,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity]
-#[ORM\Table(name: "books")]
+#[ORM\Table(name: 'books')]
 class Book
 {
     #[ORM\Id()]
-    #[ORM\Column(name: "id", type: "string", length: 36)]
+    #[ORM\Column(name: 'id', type: 'string', length: 36)]
     private string $id;
 
-    #[ORM\Column(name: "title", type: "string", nullable: false)]
+    #[ORM\Column(name: 'title', type: 'string', nullable: false)]
     private string $title;
 
     public function __construct()

@@ -7,8 +7,8 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Book[] findAll()
- * @method Book[] findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null)()
+ * @method Book[]    findAll()
+ * @method Book[]    findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null)()
  * @method Book|null findOneBy(array $criteria, ?array $orderBy = null)
  */
 class BookRepository extends ServiceEntityRepository

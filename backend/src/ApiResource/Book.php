@@ -8,8 +8,12 @@ use App\Entity\Book as BookEntity;
 
 #[Api\ApiResource(
     operations: [
-        new Api\Get(stateOptions: new DoctrineORMOptions(entityClass: BookEntity::class)),
-        new Api\GetCollection(stateOptions: new DoctrineORMOptions(entityClass: BookEntity::class)),
+        new Api\Get(
+            stateOptions: new DoctrineORMOptions(entityClass: BookEntity::class)
+        ),
+        new Api\GetCollection(
+            stateOptions: new DoctrineORMOptions(entityClass: BookEntity::class)
+        ),
     ],
 )]
 class Book

@@ -21,7 +21,7 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-         return $this->redirect($this->adminUrlGenerator->setController(BookCrudController::class)->generateUrl());
+        return $this->redirect($this->adminUrlGenerator->setController(BookCrudController::class)->generateUrl());
     }
 
     public function configureDashboard(): Dashboard
@@ -33,6 +33,6 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-         yield MenuItem::linkToCrud('Books', 'fas fa-list', Book::class);
+        yield MenuItem::linkToCrud('Books', 'fas fa-list', Book::class);
     }
 }
