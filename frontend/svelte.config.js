@@ -6,7 +6,7 @@ const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
 	// for more information about preprocessors
 	preprocess: preprocess({
-		postcss: true,
+		postcss: true
 	}),
 
 	kit: {
@@ -14,11 +14,11 @@ const config = {
 			pages: './build/',
 			assets: './build/',
 			precompress: true,
-			fallback: 'index.html',
+			fallback: 'index.html'
 		}),
 		prerender: {
-			crawl: true,
-		},
+			crawl: true
+		}
 	}
 };
 

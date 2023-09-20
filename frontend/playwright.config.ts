@@ -8,9 +8,9 @@ const config: PlaywrightTestConfig = {
 	use: {
 		browserName: 'firefox',
 		defaultBrowserType: 'firefox',
-		headless: true,
+		headless: true
 	},
-	testMatch: /tests\/.*.(js|ts)/,
+	testMatch: /tests\/.*.(js|ts)/
 };
 
 export default config;

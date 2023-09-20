@@ -1,4 +1,4 @@
-import {defineConfig} from 'orval';
+import { defineConfig } from 'orval';
 
 export default defineConfig({
 	applicationApi: {
@@ -10,10 +10,10 @@ export default defineConfig({
 			tslint: true,
 			target: './src/lib/openapi/index.ts',
 			schemas: 'src/lib/openapi/model/',
-			client: 'axios', // This is the default.
+			client: 'axios' // This is the default.
 		},
 		hooks: {
-			afterAllFilesWrite: 'prettier --write',
-		},
-	},
+			afterAllFilesWrite: 'prettier --write'
+		}
+	}
 });
