@@ -115,6 +115,10 @@ test-backend: ## Run backend tests
 	$(PHP) bin/phpunit
 .PHONY: test-backend
 
+php-cs: ## Run php-cs-fixer to format PHP files
+	$(PHP) php-cs-fixer fix
+.PHONY: php-cs
+
 ##
 ## Frontend application
 ## --------------------
@@ -132,5 +136,9 @@ e2e-setup:
 test-frontend: ## Run frontend tests
 	$(NODE_PKG_MANAGER) run test
 .PHONY: test-frontend
+
+prettier: ## Run Prettier on JS/TS files to format them properly
+	$(NODE_PKG_MANAGER) run format
+.PHONY: prettier
 
 ##
