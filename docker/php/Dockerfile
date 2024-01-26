@@ -1,81 +1,103 @@
-FROM debian:10-slim
+#syntax=docker/dockerfile:1.4
 
-LABEL maintainer="pierstoval@gmail.com"
+# Adapted from https://github.com/dunglas/symfony-docker
 
-WORKDIR /srv
 
-CMD ["php-fpm8.2"]
+# Versions
+# hadolint ignore=DL3007
+FROM dunglas/frankenphp:latest-alpine AS frankenphp_upstream
+FROM composer/composer:2-bin AS composer_upstream
 
-ENV PHP_VERSION=8.2 \
-    GOSU_VERSION=1.14 \
-    PANTHER_NO_SANDBOX=1 \
-    PATH=/home/.composer/vendor/bin:$PATH \
-    PATH=/home/.config/composer/vendor/bin:$PATH \
-    RUN_USER="_www"
 
-COPY bin/entrypoint.sh /bin/entrypoint
-COPY --from=composer /usr/bin/composer /usr/bin/composer
+# The different stages of this Dockerfile are meant to be built into separate images
+# https://docs.docker.com/develop/develop-images/multistage-build/#stop-at-a-specific-build-stage
+# https://docs.docker.com/compose/compose-file/#target
 
-RUN set -xe \
-    && apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-        wget \
-        unzip \
-        dialog apt-utils `# Prevents having this issue: https://github.com/moby/moby/issues/27988` \
-    \
-    \
-    && `# Deb Sury PHP repository` \
-    && apt-get -y install apt-transport-https lsb-release ca-certificates curl \
-    && wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
-    && sh -c 'echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list' \
-    && apt-get update \
-    \
-    \
-    && `# PHP and extensions` \
-    && apt-get install -y \
-        php${PHP_VERSION} \
-        php${PHP_VERSION}-apcu \
-        php${PHP_VERSION}-curl \
-        php${PHP_VERSION}-fpm \
-        php${PHP_VERSION}-intl \
-        php${PHP_VERSION}-mbstring \
-        php${PHP_VERSION}-pgsql \
-        php${PHP_VERSION}-opcache \
-        php${PHP_VERSION}-xml \
-        php${PHP_VERSION}-zip \
-        php${PHP_VERSION}-xdebug \
-    \
-    && mkdir -p /run/php \
-    && touch "/var/log/php-fpm-error.log" \
-    && touch "/var/log/php-fpm-access.log" \
-    \
-    \
-    && `# User management for entrypoint` \
-    && chmod +x /bin/entrypoint \
-    && curl -L -s -o /bin/gosu https://github.com/tianon/gosu/releases/download/${GOSU_VERSION}/gosu-$(dpkg --print-architecture | awk -F- '{ print $NF }') \
-    && chmod +x /bin/gosu \
-    && mkdir -p /home \
-    && groupadd ${RUN_USER} \
-    && adduser --home=/home --shell=/bin/bash --ingroup=${RUN_USER} --disabled-password --quiet --gecos "" --force-badname ${RUN_USER} \
-    && chown ${RUN_USER}:${RUN_USER} /home \
-    \
-    \
-    && `# Static analysis` \
-    && curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o /usr/local/bin/php-cs-fixer && chmod a+x /usr/local/bin/php-cs-fixer \
-    \
-    \
-    && `# Clean apt and remove unused libs/packages to make image smaller` \
-    && runuser -l $RUN_USER -c 'composer clearcache' \
-    && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false $BUILD_LIBS \
-    && apt-get -y autoremove \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/www/* /var/cache/* /home/.composer/cache
 
-COPY etc/php.ini /etc/php/${PHP_VERSION}/fpm/conf.d/99-custom.ini
-COPY etc/php.ini /etc/php/${PHP_VERSION}/cli/conf.d/99-custom.ini
-COPY etc/fpm.conf /etc/php/${PHP_VERSION}/fpm/pool.d/www.conf
+# Base FrankenPHP image
+FROM frankenphp_upstream AS frankenphp_base
 
-ENTRYPOINT ["/bin/entrypoint"]
+WORKDIR /app
+
+# persistent / runtime deps
+# hadolint ignore=DL3018
+RUN apk add --no-cache \
+		acl \
+		file \
+		gettext \
+		git \
+	;
+
+RUN set -eux; \
+    install-php-extensions \
+		apcu \
+		intl \
+		opcache \
+		zip \
+    ;
+
+###> recipes ###
+###> doctrine/doctrine-bundle ###
+RUN set -eux; \
+    install-php-extensions pdo_pgsql
+###< doctrine/doctrine-bundle ###
+###< recipes ###
+
+COPY --link docker/php/frankenphp/conf.d/app.ini $PHP_INI_DIR/conf.d/
+COPY --link --chmod=755 docker/php/frankenphp/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+COPY --link docker/php/frankenphp/Caddyfile /etc/caddy/Caddyfile
+
+ENTRYPOINT ["docker-entrypoint"]
+
+# https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PATH="${PATH}:/root/.composer/vendor/bin"
+
+COPY --from=composer_upstream --link /composer /usr/bin/composer
+
+HEALTHCHECK --start-period=60s CMD curl -f http://localhost:2019/metrics || exit 1
+CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile" ]
+
+# Dev FrankenPHP image
+FROM frankenphp_base AS frankenphp_dev
+
+ENV APP_ENV=dev XDEBUG_MODE=off
+VOLUME /app/var/
+
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+
+RUN set -eux; \
+	install-php-extensions \
+    	xdebug \
+    ;
+
+COPY --link docker/php/frankenphp/conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
+
+CMD [ "frankenphp", "run", "--config", "/etc/caddy/Caddyfile", "--watch" ]
+
+# Prod FrankenPHP image
+FROM frankenphp_base AS frankenphp_prod
+
+ENV APP_ENV=prod
+ENV FRANKENPHP_CONFIG="import worker.Caddyfile"
+
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
+
+COPY --link docker/php/frankenphp/conf.d/app.prod.ini $PHP_INI_DIR/conf.d/
+COPY --link docker/php/frankenphp/worker.Caddyfile /etc/caddy/worker.Caddyfile
+
+# prevent the reinstallation of vendors at every changes in the source code
+COPY --link backend/composer.* backend/symfony.* ./
+RUN set -eux; \
+	composer install --no-cache --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
+
+# copy sources
+COPY --link backend/. ./
+RUN rm -Rf docker/php/frankenphp/
+
+RUN set -eux; \
+	mkdir -p var/cache var/log; \
+	composer dump-autoload --classmap-authoritative --no-dev; \
+	composer dump-env prod; \
+	composer run-script --no-dev post-install-cmd; \
+	chmod +x bin/console; sync;
