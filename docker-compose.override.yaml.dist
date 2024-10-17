@@ -1,5 +1,0 @@
-version: "3"
-
-services:
-    mailcatcher:
-        ports: ['8025:8025'] # In case you want to expose Mailcatcher's HTTP endpoint to debug sent emails

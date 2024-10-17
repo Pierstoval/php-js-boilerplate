@@ -1,25 +1,13 @@
-version: "3.4"
-
 volumes:
     db_data:
-    php_socket:
 
 services:
     php:
         build:
             context: ./docker/php/
-        working_dir: /srv/
+        working_dir: /app/
         volumes:
-            - "./backend/:/srv"
-            - "php_socket:/var/run/php"
-
-    caddy:
-        build:
-            context: ./docker/caddy/
-        working_dir: /srv/
-        volumes:
-            - "php_socket:/var/run/php"
-            - "./backend/:/srv/"
+            - "./backend/:/app"
         ports:
             - "80:80"
             - "443:443"
@@ -27,6 +15,7 @@ services:
 
     mailcatcher:
         image: mailhog/mailhog
+        ports: ['8025:8025']
 
     node:
         build: ./docker/node/
