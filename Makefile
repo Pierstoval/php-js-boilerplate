@@ -16,13 +16,13 @@ SHELL=bash
 
 DOCKER                ?= docker
 DOCKER_COMPOSE        ?= docker-compose
-DOCKER_COMPOSE_EXEC   ?= $(DOCKER_COMPOSE) exec -T
+DOCKER_COMPOSE_EXEC   ?= $(DOCKER_COMPOSE) exec
 DOCKER_COMPOSE_RUN    ?= $(DOCKER_COMPOSE) run --rm
 
-PHP                   ?= $(DOCKER_COMPOSE_EXEC) $(PHP_CONTAINER_NAME) entrypoint
+PHP                   ?= $(DOCKER_COMPOSE_EXEC) $(PHP_CONTAINER_NAME) docker-php-entrypoint
 COMPOSER              ?= $(DOCKER_COMPOSE_RUN) $(PHP_CONTAINER_NAME) composer
 SF_CONSOLE            ?= $(PHP) bin/console
-NODE                  ?= $(DOCKER_COMPOSE_EXEC) $(NODE_CONTAINER_NAME) entrypoint
+NODE                  ?= $(DOCKER_COMPOSE_EXEC) -T $(NODE_CONTAINER_NAME) entrypoint
 NODE_PKG_MANAGER      ?= $(NODE) $(NODE_PKG_MANAGER_NAME)
 NODE_PKG_MANAGER_RUN  ?= $(DOCKER_COMPOSE_RUN) --no-deps $(NODE_CONTAINER_NAME) $(NODE_PKG_MANAGER_NAME)
 
@@ -100,14 +100,14 @@ openapi-export: ## Export OpenAPI data to JSON and create a JS client for fronte
 db:
 	$(SF_CONSOLE) --no-interaction doctrine:database:drop --force --if-exists
 	$(SF_CONSOLE) --no-interaction doctrine:database:create
-	$(SF_CONSOLE) --no-interaction doctrine:migration:migrate
+	$(SF_CONSOLE) --no-interaction doctrine:migration:migrate --allow-no-migration
 	$(SF_CONSOLE) --no-interaction doctrine:fixtures:load
 .PHONY: db
 
 test-db:
 	$(SF_CONSOLE) --no-interaction --env=test doctrine:database:drop --force --if-exists
 	$(SF_CONSOLE) --no-interaction --env=test doctrine:database:create
-	$(SF_CONSOLE) --no-interaction --env=test doctrine:migration:migrate
+	$(SF_CONSOLE) --no-interaction --env=test doctrine:migration:migrate --allow-no-migration
 	$(SF_CONSOLE) --no-interaction --env=test doctrine:fixtures:load
 .PHONY: test-db
 
@@ -115,7 +115,7 @@ test-backend: ## Run backend tests
 	$(PHP) bin/phpunit
 .PHONY: test-backend
 
-php-cs: ## Run php-cs-fixer to format PHP files
+php-cs: ## Run php-cs-fixer to format PHP files
 	$(PHP) php-cs-fixer fix
 .PHONY: php-cs
 
@@ -137,7 +137,7 @@ test-frontend: ## Run frontend tests
 	$(NODE_PKG_MANAGER) run test
 .PHONY: test-frontend
 
-prettier: ## Run Prettier on JS/TS files to format them properly
+prettier: ## Run Prettier on JS/TS files to format them properly
 	$(NODE_PKG_MANAGER) run format
 .PHONY: prettier
 
