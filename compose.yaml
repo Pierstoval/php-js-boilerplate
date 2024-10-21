@@ -1,5 +1,5 @@
-volumes:
-    db_data:
+include:
+    - backend/compose.yaml
 
 services:
     php:
@@ -24,11 +24,3 @@ services:
             - "3000:3000"
         volumes:
             - "./frontend/:/srv"
-
-    database:
-        image: "postgres:14-alpine"
-        working_dir: /srv/
-        volumes: ["db_data:/var/lib/postgresql/data"]
-        environment:
-            POSTGRES_PASSWORD: app
-            POSTGRES_USER: app
