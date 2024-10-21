@@ -78,7 +78,7 @@ vendor: ## Install PHP vendors
 
 node_modules: ## Install JS vendors
 	mkdir -p $(NODE_APP_DIR)/node_modules/
-	yes | $(NODE_PKG_MANAGER_RUN) install --frozen-lockfile
+	$(NODE_PKG_MANAGER_RUN) install --frozen-lockfile --force
 	$(DOCKER_COMPOSE) up -d $(NODE_CONTAINER_NAME)
 .PHONY: node_modules
 

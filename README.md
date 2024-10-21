@@ -3,11 +3,16 @@ Default JAMStack project
 
 Contains:
 
+* A `Makefile` that self-documents a lot of commands to run on the project
+* A whole Docker-based setup for development
+* PostgreSQL as default database
+* A standard static-site SvelteKit application for frontend
 * A PHP/Symfony app with Api Platform for backend
-* A default SvelteKit application for frontend
-* CSS powered by Tailwind
 * An OpenApi spec export/import process to allow frontend client to call the backend API
 * An administration panel powered by EasyAdmin
+* Unit tests made simple with Vitest
+* E2E/Browser testing with Playwright
+* Some default droppable code to allow you to quickly get into the project's whereabouts
 
 ## Create a new project
 
@@ -49,7 +54,7 @@ The application is served through several endpoints:
 
 All of these different HTTP endpoints are configured using [Caddy](https://caddyserver.com), one of the most modern and customizable HTTP servers.
 
-Check also the [Caddyfile](./docker/caddy/Caddyfile) for details about HTTP routing.
+Check also the [Caddyfile](./docker/php/Caddyfile) for details about HTTP routing.
 
 ## Backend
 
@@ -58,7 +63,7 @@ The backend app exposes **only two** endpoints:
 * An API through the `/api` endpoint, and it is defined with Api Platform.
 * An administration panel via `/admin`, configured with EasyAdmin.
 
-You can customize the API and admin panel like you want, but if you need to change the **HTTP paths**, don't forget to check the [Caddyfile](./docker/caddy/Caddyfile) to update HTTP routing.
+You can customize the API and admin panel like you want, but if you need to change the **HTTP paths**, don't forget to check the [Caddyfile](./docker/php/Caddyfile) to update HTTP routing.
 
 ## Frontend
 
