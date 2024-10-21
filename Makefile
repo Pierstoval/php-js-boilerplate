@@ -4,7 +4,7 @@ PHP_CONTAINER_NAME    ?= php
 PHP_APP_DIR           ?= backend
 NODE_CONTAINER_NAME   ?= node
 NODE_APP_DIR          ?= frontend
-NODE_PKG_MANAGER_NAME ?= yarn
+NODE_PKG_MANAGER_NAME ?= pnpm
 
 # --------------
 
@@ -78,7 +78,7 @@ vendor: ## Install PHP vendors
 
 node_modules: ## Install JS vendors
 	mkdir -p $(NODE_APP_DIR)/node_modules/
-	$(NODE_PKG_MANAGER_RUN) install
+	yes | $(NODE_PKG_MANAGER_RUN) install --frozen-lockfile
 	$(DOCKER_COMPOSE) up -d $(NODE_CONTAINER_NAME)
 .PHONY: node_modules
 

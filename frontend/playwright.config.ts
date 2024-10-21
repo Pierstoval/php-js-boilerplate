@@ -1,8 +1,8 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
 
-const config: PlaywrightTestConfig = {
+export default defineConfig({
 	webServer: {
-		command: 'yarn run build && yarn run preview',
+		command: 'pnpm run build && npm run preview',
 		port: 4173
 	},
 	use: {
@@ -10,7 +10,5 @@ const config: PlaywrightTestConfig = {
 		defaultBrowserType: 'firefox',
 		headless: true
 	},
-	testMatch: /tests\/.*.(js|ts)/
-};
-
-export default config;
+	testDir: 'e2e'
+});

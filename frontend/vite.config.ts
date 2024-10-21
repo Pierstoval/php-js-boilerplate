@@ -1,8 +1,15 @@
+import { defineConfig } from 'vitest/config';
 import { sveltekit } from '@sveltejs/kit/vite';
-import type { UserConfig } from 'vite';
+import { configDefaults } from 'vitest/config';
+import { svelteTesting } from '@testing-library/svelte/vite';
 
-const config: UserConfig = {
-	plugins: [sveltekit()]
-};
+export default defineConfig({
+	plugins: [sveltekit(), svelteTesting()],
 
-export default config;
+	test: {
+		include: ['src/**/*.{test,spec}.{js,ts}'],
+		exclude: [...configDefaults.exclude, '**/build/**', '**/.svelte-kit/**', '**/dist/**'],
+		globals: true,
+		environment: 'jsdom',
+	}
+});
