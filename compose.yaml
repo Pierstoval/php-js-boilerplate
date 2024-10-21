@@ -1,0 +1,26 @@
+include:
+    - backend/compose.yaml
+
+services:
+    php:
+        build:
+            context: ./docker/php/
+        working_dir: /app/
+        volumes:
+            - "./backend/:/app"
+        ports:
+            - "80:80"
+            - "443:443"
+            - "443:443/udp"
+
+    mailcatcher:
+        image: mailhog/mailhog
+        ports: ['8025:8025']
+
+    node:
+        build: ./docker/node/
+        working_dir: /srv/
+        ports:
+            - "3000:3000"
+        volumes:
+            - "./frontend/:/srv"
