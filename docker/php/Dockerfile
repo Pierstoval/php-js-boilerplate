@@ -20,7 +20,7 @@ RUN \
         curl \
         intl \
         mbstring \
-        pgsql \
+        pdo_pgsql \
         opcache \
         xml \
         zip \
@@ -29,5 +29,6 @@ RUN \
     && `# Static analysis` \
     && curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o /usr/local/bin/php-cs-fixer && chmod a+x /usr/local/bin/php-cs-fixer
 
+COPY ./Caddyfile /etc/caddy/Caddyfile
 
 COPY etc/php.ini /usr/local/etc/php/conf.d/99-application.ini
