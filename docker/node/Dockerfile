@@ -41,4 +41,4 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/www/* /var/cache/* /home/.composer/cache
 
-CMD ["pnpm", "run", "dev", "--", "--port", "3000", "--host", "0.0.0.0"]
+CMD ["pnpm", "run", "dev", "--port", "3000", "--host", "0.0.0.0"]

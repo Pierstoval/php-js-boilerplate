@@ -42,6 +42,7 @@
 	###
 
 	{$CADDY_SERVER_EXTRA_DIRECTIVES}
+
 	@file_exists `file({path}) && !path_regexp(".php")`
 
 	@php `path_regexp('(.php|^/(api|admin|_profiler|_wdt|_error))')`

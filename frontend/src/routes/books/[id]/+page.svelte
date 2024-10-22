@@ -1,20 +1,22 @@
 <script lang="ts">
 	import {onMount} from "svelte";
 	import {page} from '$app/stores';
-	import {get} from "$lib/openapi";
-	import {type Book} from "$lib/openapi/model";
+	import {getApi} from "$lib/openapi";
+	import {type BookJsonld} from "$lib/openapi/model";
 
 	let id = $page.params['id'];
 
-	let book: Book|null = null;
+	let book: BookJsonld|null = null;
 
     let finished_loading = false;
 
 	onMount(() => {
 		if (!id) return;
-		get().apiBooksIdGet(id).then(res => book = res.data);
 
-        finished_loading = true;
+        getApi()
+            .apiBooksIdGet(id)
+            .then(res => book = res.data)
+            .finally(() => finished_loading = true);
 	});
 </script>
 
@@ -29,4 +31,3 @@
 
 	<span>Id: <small>{book.id}</small></span>
 {/if}
-
