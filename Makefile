@@ -15,7 +15,7 @@ _ERROR := "\033[31m[ERROR]\033[0m %s\n" # Red text for "printf"
 SHELL=bash
 
 DOCKER                ?= docker
-DOCKER_COMPOSE        ?= docker-compose
+DOCKER_COMPOSE        ?= docker compose
 DOCKER_COMPOSE_EXEC   ?= $(DOCKER_COMPOSE) exec
 DOCKER_COMPOSE_RUN    ?= $(DOCKER_COMPOSE) run --rm
 
