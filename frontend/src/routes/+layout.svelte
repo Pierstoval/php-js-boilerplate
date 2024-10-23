@@ -1,7 +1,6 @@
 <script lang="ts">
-	import "../app.css";
-	import '../styles/app.scss';
-	
+	import "../app.scss";
+
 	import TopMenu from '../lib/components/TopMenu.svelte';
 </script>
 
@@ -12,7 +11,11 @@
 </main>
 
 <style lang="scss">
-    main {
-      @apply container mx-auto;
-    }
+	main {
+		min-width: 320px;
+		max-width: 1080px;
+		width: 80%;
+		margin-left: auto;
+		margin-right: auto;
+	}
 </style>

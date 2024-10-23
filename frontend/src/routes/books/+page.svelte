@@ -1,34 +1,45 @@
 <script lang="ts">
     import {onMount} from "svelte";
-    import {get} from "$lib/openapi";
-    import {type Book} from "$lib/openapi/model";
+    import {getApi} from "$lib/openapi";
+    import {type BookJsonld} from "$lib/openapi/model";
+    import {page} from '$app/stores';
 
-    let books: Array<Book> = [];
+    let books: Array<BookJsonld> = [];
 
     onMount(() => {
-        get()
+        getApi()
             .apiBooksGetCollection()
-            .then(res => books = res.data['hydra:member']);
+            .then(res => books = res.data.member);
     });
+
+    let host = `${$page.url.protocol}//${$page.url.host}/admin`;
 </script>
 
 <h1>Available books:</h1>
 
 <table>
-    <tr>
-        <th>#</th>
-        <th>Title</th>
-        <th>Actions</th>
-    </tr>
-    {#each books as book (book.id)}
+    <tbody>
         <tr>
-            <td>{book.id.substring(0, 8)}{book.id.length > 8 ? '…' : ''}</td>
-            <td>{book.title}</td>
-            <td>
-                <a href="/books/{book.id}">View</a>
-            </td>
+            <th>#</th>
+            <th>Title</th>
+            <th>Actions</th>
         </tr>
-    {/each}
+        {#each books as book (book.id)}
+            <tr>
+                <td>{book.id.substring(0, 8)}{book.id.length > 8 ? '…' : ''}</td>
+                <td>{book.title}</td>
+                <td>
+                    <a href="/books/{book.id}">View</a>
+                </td>
+            </tr>
+        {:else}
+            <tr>
+                <td colspan="3">
+                    No books yet! Use the admin to add some: <a href="{host}">{host}</a>
+                </td>
+            </tr>
+        {/each}
+    </tbody>
 </table>
 
 <style lang="scss">
