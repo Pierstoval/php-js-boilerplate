@@ -16,7 +16,7 @@
 		"preview": "vite preview",
 		"test:unit": "vitest",
 		"test:e2e": "playwright test",
-		"test": "pnpm run test:e2e && pnpm run test:unit -- --run"
+		"test": "pnpm run test:e2e && pnpm run test:unit --run"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.48.1",

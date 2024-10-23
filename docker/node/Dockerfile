@@ -34,6 +34,11 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && chown ${RUN_USER}:${RUN_USER} /home \
     \
     \
+    && `# E2E Testing` \
+    && pnpx playwright install-deps \
+    && runuser -l ${RUN_USER} -c 'pnpx playwright install' \
+    \
+    \
     && `# Clean apt and remove unused libs/packages to make image smaller` \
     && npm cache clean --force \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false \
