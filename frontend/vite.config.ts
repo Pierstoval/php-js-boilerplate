@@ -18,6 +18,6 @@ export default defineConfig({
 		include: ['src/**/*.{test,spec}.{js,ts}'],
 		exclude: [...configDefaults.exclude, '**/build/**', '**/.svelte-kit/**', '**/dist/**'],
 		globals: true,
-		environment: 'jsdom',
+		environment: 'jsdom'
 	}
 });

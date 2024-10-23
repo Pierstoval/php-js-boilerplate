@@ -1,11 +1,11 @@
 <script lang="ts">
-	import "../app.scss";
+	import '../app.scss';
 
 	import TopMenu from '../lib/components/TopMenu.svelte';
 </script>
 
 <main>
-	<TopMenu/>
+	<TopMenu />
 
 	<slot></slot>
 </main>

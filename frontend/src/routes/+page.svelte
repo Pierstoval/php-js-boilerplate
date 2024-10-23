@@ -2,5 +2,7 @@
 <p>It's working!</p>
 
 <style lang="scss">
-    h1 { font-weight: bold; }
+	h1 {
+		font-weight: bold;
+	}
 </style>
