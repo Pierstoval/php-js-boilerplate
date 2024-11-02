@@ -16,6 +16,15 @@ ok() {
     printf " \033[32m%s\033[0m\n" "Done!"
 }
 
-yarn --cwd=frontend upgrade --latest
+info "Remove dependencies" 
+rm -rf frontend/node_modules backend/vendor
+ok
 
+info "Update frontend dependencies"
+pnpm --dir=frontend upgrade --latest
+ok
+
+info "Update backend dependencies"
 composer --working-dir=backend update --with-all-dependencies --no-scripts --no-interaction
+ok
+
