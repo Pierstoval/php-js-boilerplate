@@ -2425,23 +2425,23 @@
         },
         {
             "name": "easycorp/easyadmin-bundle",
-            "version": "v4.14.5",
+            "version": "v4.15.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/EasyAdminBundle.git",
-                "reference": "575b251366c2a88c5f0c1562e517b5243bdc4bd2"
+                "reference": "d0fb7e8260206d29154fbe3eddbc9cb5680a417b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/575b251366c2a88c5f0c1562e517b5243bdc4bd2",
-                "reference": "575b251366c2a88c5f0c1562e517b5243bdc4bd2",
+                "url": "https://api.github.com/repos/EasyCorp/EasyAdminBundle/zipball/d0fb7e8260206d29154fbe3eddbc9cb5680a417b",
+                "reference": "d0fb7e8260206d29154fbe3eddbc9cb5680a417b",
                 "shasum": ""
             },
             "require": {
                 "doctrine/doctrine-bundle": "^2.5",
-                "doctrine/orm": "^2.10|^3.0",
+                "doctrine/orm": "^2.12|^3.0",
                 "ext-json": "*",
-                "php": ">=8.0.2",
+                "php": ">=8.1",
                 "symfony/asset": "^5.4|^6.0|^7.0",
                 "symfony/cache": "^5.4|^6.0|^7.0",
                 "symfony/config": "^5.4|^6.0|^7.0",
@@ -2508,7 +2508,7 @@
             ],
             "support": {
                 "issues": "https://github.com/EasyCorp/EasyAdminBundle/issues",
-                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.14.5"
+                "source": "https://github.com/EasyCorp/EasyAdminBundle/tree/v4.15.1"
             },
             "funding": [
                 {
@@ -2516,7 +2516,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-11-08T07:07:54+00:00"
+            "time": "2024-11-21T18:08:26+00:00"
         },
         {
             "name": "egulias/email-validator",
