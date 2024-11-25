@@ -8,7 +8,7 @@
     "packages": [
         {
             "name": "api-platform/doctrine-common",
-            "version": "v4.0.9",
+            "version": "v4.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/doctrine-common.git",
@@ -89,13 +89,13 @@
                 "rest"
             ],
             "support": {
-                "source": "https://github.com/api-platform/doctrine-common/tree/v4.0.9"
+                "source": "https://github.com/api-platform/doctrine-common/tree/v4.0.10"
             },
             "time": "2024-09-21T11:01:16+00:00"
         },
         {
             "name": "api-platform/doctrine-orm",
-            "version": "v4.0.9",
+            "version": "v4.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/doctrine-orm.git",
@@ -173,7 +173,7 @@
                 "rest"
             ],
             "support": {
-                "source": "https://github.com/api-platform/doctrine-orm/tree/v4.0.9"
+                "source": "https://github.com/api-platform/doctrine-orm/tree/v4.0.10"
             },
             "time": "2024-11-04T14:21:40+00:00"
         },
@@ -556,16 +556,16 @@
         },
         {
             "name": "api-platform/metadata",
-            "version": "v4.0.9",
+            "version": "v4.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/metadata.git",
-                "reference": "08f469ebee4282c0aa579a4716bb112ce1862b7a"
+                "reference": "6f8b0641c76952060ceeaa1e1652688fc9c9d16b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/api-platform/metadata/zipball/08f469ebee4282c0aa579a4716bb112ce1862b7a",
-                "reference": "08f469ebee4282c0aa579a4716bb112ce1862b7a",
+                "url": "https://api.github.com/repos/api-platform/metadata/zipball/6f8b0641c76952060ceeaa1e1652688fc9c9d16b",
+                "reference": "6f8b0641c76952060ceeaa1e1652688fc9c9d16b",
                 "shasum": ""
             },
             "require": {
@@ -646,9 +646,9 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/metadata/tree/v4.0.9"
+                "source": "https://github.com/api-platform/metadata/tree/v4.0.10"
             },
-            "time": "2024-11-15T10:11:07+00:00"
+            "time": "2024-11-22T11:08:39+00:00"
         },
         {
             "name": "api-platform/openapi",
@@ -827,7 +827,7 @@
         },
         {
             "name": "api-platform/state",
-            "version": "v4.0.9",
+            "version": "v4.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/api-platform/state.git",
@@ -911,7 +911,7 @@
                 "swagger"
             ],
             "support": {
-                "source": "https://github.com/api-platform/state/tree/v4.0.9"
+                "source": "https://github.com/api-platform/state/tree/v4.0.10"
             },
             "time": "2024-11-15T10:11:07+00:00"
         },
