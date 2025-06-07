@@ -2,7 +2,7 @@
 FROM ubuntu:22.04
 
 ENV GOSU_VERSION=1.17 \
-    NODE_VERSION=20 \
+    NODE_VERSION=22 \
     RUN_USER="node"
 
 COPY bin/entrypoint.sh /bin/entrypoint

@@ -7,7 +7,9 @@ services:
             context: ./docker/php/
         working_dir: /app/
         volumes:
-            - "./backend/:/app"
+            - ./:/app
+            - caddy_data:/data
+            - caddy_config:/config
         ports:
             - "80:80"
             - "443:443"
@@ -23,4 +25,8 @@ services:
         ports:
             - "3000:3000"
         volumes:
-            - "./frontend/:/srv"
+            - ./frontend/:/srv
+
+volumes:
+    caddy_data:
+    caddy_config:

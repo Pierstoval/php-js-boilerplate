@@ -19,8 +19,8 @@ DOCKER_COMPOSE        ?= docker compose
 DOCKER_COMPOSE_EXEC   ?= $(DOCKER_COMPOSE) exec
 DOCKER_COMPOSE_RUN    ?= $(DOCKER_COMPOSE) run --rm
 
-PHP                   ?= $(DOCKER_COMPOSE_EXEC) $(PHP_CONTAINER_NAME) docker-php-entrypoint
-COMPOSER              ?= $(DOCKER_COMPOSE_RUN) $(PHP_CONTAINER_NAME) composer
+PHP                   ?= $(DOCKER_COMPOSE_EXEC) --workdir=/app/backend $(PHP_CONTAINER_NAME) docker-php-entrypoint
+COMPOSER              ?= $(DOCKER_COMPOSE_RUN) --workdir=/app/backend $(PHP_CONTAINER_NAME) composer
 SF_CONSOLE            ?= $(PHP) bin/console
 NODE                  ?= $(DOCKER_COMPOSE_EXEC) -T $(NODE_CONTAINER_NAME) entrypoint
 NODE_PKG_MANAGER      ?= $(NODE) $(NODE_PKG_MANAGER_NAME)
@@ -84,9 +84,9 @@ node_modules: ## Install JS vendors
 
 openapi-export: ## Export OpenAPI data to JSON and create a JS client for frontend use
 	$(SF_CONSOLE) --no-interaction api:openapi:export --output=var/openapi/openapi.json
-	$(DOCKER_COMPOSE_EXEC) $(NODE_CONTAINER_NAME) mkdir -p build
-	@$(DOCKER_COMPOSE_EXEC) $(PHP_CONTAINER_NAME) chown -R 1000:1000 var # Bit hacky, isn't it... But it should work
-	@$(DOCKER_COMPOSE_EXEC) $(NODE_CONTAINER_NAME) chown -R 1000:1000 build # same hack here
+	$(NODE) mkdir -p build
+	@$(PHP) chown -R 1000:1000 var # Bit hacky, isn't it... But it should work
+	@$(NODE) chown -R 1000:1000 build # same hack here
 	cp $(PHP_APP_DIR)/var/openapi/openapi.json \
 		$(NODE_APP_DIR)/build/openapi.json
 	$(NODE_PKG_MANAGER_RUN) orval

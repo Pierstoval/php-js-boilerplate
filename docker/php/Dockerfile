@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:php8.3
+FROM dunglas/frankenphp:php8.4
 
 ENV PANTHER_NO_SANDBOX=1 \
     PATH=/home/.composer/vendor/bin:$PATH \
@@ -29,6 +29,6 @@ RUN \
     && `# Static analysis` \
     && curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o /usr/local/bin/php-cs-fixer && chmod a+x /usr/local/bin/php-cs-fixer
 
-COPY ./Caddyfile /etc/caddy/Caddyfile
+COPY ./Caddyfile /etc/frankenphp/Caddyfile
 
 COPY etc/php.ini /usr/local/etc/php/conf.d/99-application.ini
