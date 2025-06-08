@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-test('index page has expected nav link', async ({ page }) => {
+test('home page has expected h1', async ({ page }) => {
 	await page.goto('/');
-	expect(await page.textContent('nav a')).toBe('Home');
+	await expect(page.locator('h1')).toBeVisible();
 });
