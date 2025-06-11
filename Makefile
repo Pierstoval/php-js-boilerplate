@@ -20,6 +20,7 @@ DOCKER_COMPOSE_EXEC   ?= $(DOCKER_COMPOSE) exec
 DOCKER_COMPOSE_RUN    ?= $(DOCKER_COMPOSE) run --rm
 
 PHP                   ?= $(DOCKER_COMPOSE_EXEC) --workdir=/app/backend $(PHP_CONTAINER_NAME) docker-php-entrypoint
+PHP_NO_XDEBUG         ?= $(DOCKER_COMPOSE_EXEC) --env=XDEBUG_MODE=off --workdir=/app/backend $(PHP_CONTAINER_NAME) docker-php-entrypoint
 COMPOSER              ?= $(DOCKER_COMPOSE_RUN) --workdir=/app/backend $(PHP_CONTAINER_NAME) composer
 SF_CONSOLE            ?= $(PHP) bin/console
 NODE                  ?= $(DOCKER_COMPOSE_EXEC) -T $(NODE_CONTAINER_NAME) entrypoint
@@ -112,7 +113,7 @@ test-db:
 .PHONY: test-db
 
 test-backend: ## Run backend tests
-	$(PHP) bin/phpunit
+	$(PHP_NO_XDEBUG) bin/phpunit
 .PHONY: test-backend
 
 php-cs: ## Run php-cs-fixer to format PHP files
