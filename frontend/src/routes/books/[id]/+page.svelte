@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
+    import { page } from '$app/state';
 	import { getApi } from '$lib/openapi';
 	import { type BookJsonld } from '$lib/openapi/model';
-
-	let id = $page.params['id'];
 
 	let book: BookJsonld | null = null;
 
@@ -18,6 +16,8 @@
 			.then((res) => (book = res.data))
 			.finally(() => (finished_loading = true));
 	});
+
+    $: id = page.params['id'];
 </script>
 
 {#if book === null}
