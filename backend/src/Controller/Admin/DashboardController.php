@@ -18,7 +18,7 @@ class DashboardController extends AbstractDashboardController
     {
     }
 
-    #[Route('/admin', name: 'admin')]
+    #[Route('/admin', name: 'admin', methods: ['GET', 'POST', 'HEAD', 'OPTIONS', 'PUT', 'DELETE', 'PATCH'])]
     public function index(): Response
     {
         return $this->redirect($this->adminUrlGenerator->setController(BookCrudController::class)->generateUrl());
