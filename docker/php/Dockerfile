@@ -11,7 +11,7 @@ COPY --from=composer /usr/bin/composer /usr/bin/composer
 RUN \
     set -xe \
     && apt-get update \
-    && apt-get upgrade -y curl \
+    && apt-get upgrade -y \
       curl \
       unzip \
     \
