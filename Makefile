@@ -8,9 +8,9 @@ NODE_PKG_MANAGER_NAME ?= pnpm
 
 # --------------
 
-_WARN := "\033[33m[WARNING]\033[0m %s\n"  # Yellow text for "printf"
-_INFO := "\033[32m[INFO]\033[0m %s\n" # Green text for "printf"
-_ERROR := "\033[31m[ERROR]\033[0m %s\n" # Red text for "printf"
+_WARN := " \033[33m[WARNING]\033[0m %s\n"  # Yellow text for "printf"
+_INFO := " \033[32m[INFO]\033[0m %s\n" # Green text for "printf"
+_ERROR := " \033[31m[ERROR]\033[0m %s\n" # Red text for "printf"
 
 SHELL=bash
 
@@ -42,10 +42,12 @@ install: build node_modules start e2e-setup vendor db test-db openapi-export
 .PHONY: install
 
 build: ## Build the Docker images
+	@printf $(_INFO) "Building Docker images"
 	@$(DOCKER_COMPOSE) build --compress
 .PHONY: build
 
 start: ## Start all containers and the PHP server
+	@printf $(_INFO) "Starting all containers"
 	@$(DOCKER_COMPOSE) up -d --remove-orphans
 .PHONY: start
 
@@ -74,16 +76,19 @@ clean: kill
 .PHONY: clean
 
 vendor: ## Install PHP vendors
+	@printf $(_INFO) "Installing backend dependencies"
 	$(COMPOSER) install
 .PHONY: vendor
 
 node_modules: ## Install JS vendors
+	@printf $(_INFO) "Installing frontend dependencies"
 	mkdir -p $(NODE_APP_DIR)/node_modules/
 	$(NODE_PKG_MANAGER_RUN) install --frozen-lockfile --force
 	$(DOCKER_COMPOSE) up -d $(NODE_CONTAINER_NAME)
 .PHONY: node_modules
 
 openapi-export: ## Export OpenAPI data to JSON and create a JS client for frontend use
+	@printf $(_INFO) "Exporting OpenAPI config file to a JS-based HTTP client"
 	$(SF_CONSOLE) --no-interaction api:openapi:export --output=var/openapi/openapi.json
 	$(NODE) mkdir -p build
 	@$(PHP) chown -R 1000:1000 var # Bit hacky, isn't it... But it should work
@@ -99,6 +104,7 @@ openapi-export: ## Export OpenAPI data to JSON and create a JS client for fronte
 ##
 
 db:
+	@printf $(_INFO) "Setting up development database"
 	$(SF_CONSOLE) --no-interaction doctrine:database:drop --force --if-exists
 	$(SF_CONSOLE) --no-interaction doctrine:database:create
 	$(SF_CONSOLE) --no-interaction doctrine:migration:migrate --allow-no-migration
@@ -106,6 +112,7 @@ db:
 .PHONY: db
 
 test-db:
+	@printf $(_INFO) "Setting up test database"
 	$(SF_CONSOLE) --no-interaction --env=test doctrine:database:drop --force --if-exists
 	$(SF_CONSOLE) --no-interaction --env=test doctrine:database:create
 	$(SF_CONSOLE) --no-interaction --env=test doctrine:migration:migrate --allow-no-migration
@@ -113,6 +120,7 @@ test-db:
 .PHONY: test-db
 
 test-backend: ## Run backend tests
+	@printf $(_INFO) "Running backend tests"
 	$(PHP_NO_XDEBUG) bin/phpunit
 .PHONY: test-backend
 
@@ -126,19 +134,25 @@ php-cs: ## Run php-cs-fixer to format PHP files
 ##
 
 assets-build: ## Build frontend as static site
+	@printf $(_INFO) "Building assets"
 	$(NODE_PKG_MANAGER) build
 .PHONY: assets-build
 
 e2e-setup:
+	@printf $(_INFO) "Setting up E2E tests environment"
 	$(DOCKER_COMPOSE_EXEC) $(NODE_CONTAINER_NAME) $(NODE_PKG_MANAGER_NAME) run playwright install-deps
 	$(NODE) $(NODE_PKG_MANAGER_NAME) run playwright install
 .PHONY: e2e-setup
 
 test-frontend: ## Run frontend tests
+	@printf $(_INFO) "Running frontend unit tests"
+	$(NODE_PKG_MANAGER) run test:unit
+	@printf $(_INFO) "Running frontend e2e tests"
 	$(NODE_PKG_MANAGER) run test
 .PHONY: test-frontend
 
 prettier: ## Run Prettier on JS/TS files to format them properly
+	@printf $(_INFO) "Formatting frontend code"
 	$(NODE_PKG_MANAGER) run format
 .PHONY: prettier
 
