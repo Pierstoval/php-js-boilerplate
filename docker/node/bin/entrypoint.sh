@@ -10,7 +10,7 @@ sed -i -r "s/${RUN_USER}:x:\d+:/${RUN_USER}:x:$gid:/g" /etc/group
 chown -R "${RUN_USER}:${RUN_USER}" /srv/
 
 # If dependencies are not installed, install them
-[ -d node_modules ] || pnpm install
+[ -d node_modules ] || exec gosu "${RUN_USER}" pnpm install
 
 if [ $# -eq 0 ]; then
     printf "\033[32m[%s]\033[0m %s\n" "Node" "Please run a command"
