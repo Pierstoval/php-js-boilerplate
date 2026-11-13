@@ -1,17 +1,15 @@
-import { describe, it, expect } from 'vitest';
-import { render } from '@testing-library/svelte';
-import '@testing-library/jest-dom';
+import { page } from 'vitest/browser';
+import { describe, expect, it } from 'vitest';
+import { render } from 'vitest-browser-svelte';
 import ComponentToTest from './TopMenu.svelte';
 
 describe('TopMenu component', () => {
-	it('can be instantiated', async () => {
-		const rendered = render(ComponentToTest);
+	it('renders greetings for host and guest', async () => {
+		render(ComponentToTest, { host: 'SvelteKit', guest: 'Vitest' });
 
-		// const element = rendered.container;
-		// expect(element).toBeDefined();
-		//
-		// const link = rendered.container.querySelector('li a');
-		// expect(link).toBeDefined();
-		// expect(link.innerText).toStrictEqual('Home');
+		await expect
+			.element(page.getByRole('heading', { level: 1 }))
+			.toHaveTextContent('Hello, SvelteKit!');
+		await expect.element(page.getByText('Hello, Vitest!')).toBeInTheDocument();
 	});
 });

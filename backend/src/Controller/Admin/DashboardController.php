@@ -5,20 +5,26 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\Book;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
+#[AdminDashboard(
+    routePath: '/admin',
+    routeName: 'admin',
+    routeOptions: [
+        'methods' => ['GET', 'POST', 'HEAD', 'OPTIONS', 'PUT', 'DELETE', 'PATCH'],
+    ],
+)]
 class DashboardController extends AbstractDashboardController
 {
     public function __construct(private readonly AdminUrlGenerator $adminUrlGenerator)
     {
     }
 
-    #[Route('/admin', name: 'admin', methods: ['GET', 'POST', 'HEAD', 'OPTIONS', 'PUT', 'DELETE', 'PATCH'])]
     public function index(): Response
     {
         return $this->redirect($this->adminUrlGenerator->setController(BookCrudController::class)->generateUrl());

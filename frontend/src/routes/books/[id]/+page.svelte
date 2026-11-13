@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-    import { page } from '$app/state';
-	import { getApi } from '$lib/openapi';
-	import { type BookJsonld } from '$lib/openapi/model';
+	import { page } from '$app/state';
+	import { getApi } from '#lib/openapi';
+	import { type BookJsonld } from '#lib/openapi/model';
 
 	let book: BookJsonld | null = null;
 
 	let finished_loading = false;
+
+	let id = $derived(page.params['id']);
 
 	onMount(() => {
 		if (!id) return;
@@ -16,8 +18,6 @@
 			.then((res) => (book = res.data))
 			.finally(() => (finished_loading = true));
 	});
-
-    $: id = page.params['id'];
 </script>
 
 {#if book === null}
