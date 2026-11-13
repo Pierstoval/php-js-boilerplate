@@ -1,8 +1,8 @@
 # Using ubuntu because playwright isn't compatible with debian.
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
-ENV GOSU_VERSION=1.17 \
-    NODE_VERSION=22 \
+ENV GOSU_VERSION=1.20 \
+    NODE_VERSION=24 \
     RUN_USER="node"
 
 COPY bin/entrypoint.sh /bin/entrypoint
