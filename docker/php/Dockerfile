@@ -1,4 +1,4 @@
-FROM dunglas/frankenphp:php8.4
+FROM dunglas/frankenphp:php8.5
 
 ENV PANTHER_NO_SANDBOX=1 \
     PATH=/home/.composer/vendor/bin:$PATH \
@@ -13,6 +13,7 @@ RUN \
     && apt-get update \
     && apt-get upgrade -y \
       curl \
+      git \
       unzip \
     \
     && install-php-extensions \
