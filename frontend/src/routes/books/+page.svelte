@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { getApi } from '$lib/openapi';
-    import { type BookJsonld } from '$lib/openapi/model';
+    import { getApi } from '#lib/openapi';
+    import { type BookJsonld } from '#lib/openapi/model';
     import { page } from '$app/state';
 
     let books: Array<BookJsonld> = [];

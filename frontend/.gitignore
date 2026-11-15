@@ -1,6 +1,4 @@
-test-results
 node_modules
-.pnpm-store
 
 # Output
 .output
@@ -23,5 +21,5 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-
-/src/lib/openapi
+# Playwright
+test-results

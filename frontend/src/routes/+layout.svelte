@@ -1,13 +1,20 @@
 <script lang="ts">
 	import '../app.scss';
-
+	import favicon from '#lib/assets/favicon.svg';
+	import type { LayoutProps } from './$types';
 	import TopMenu from '../lib/components/TopMenu.svelte';
+
+	let { children }: LayoutProps = $props();
 </script>
 
-<main>
-	<TopMenu />
+<svelte:head>
+	<link rel="icon" href={favicon} />
+</svelte:head>
 
-	<slot></slot>
+<main>
+  <TopMenu />
+
+  {@render children()}
 </main>
 
 <style lang="scss">

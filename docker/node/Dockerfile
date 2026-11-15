@@ -1,15 +1,10 @@
 # Using ubuntu because playwright isn't compatible with debian.
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
-ENV GOSU_VERSION=1.17 \
-    NODE_VERSION=22 \
+ENV NODE_VERSION=24 \
     RUN_USER="node"
 
 COPY bin/entrypoint.sh /bin/entrypoint
-
-WORKDIR /srv
-
-ENTRYPOINT ["/bin/entrypoint"]
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     && set -xe \
@@ -22,7 +17,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && (curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -) \
     && apt-get install -y nodejs \
     && npm -g i npm \
-    && npm -g i pnpm \
+    && npm config set allow-scripts=pnpm --location=user \
+    && npm -g i --allow-scripts=pnpm pnpm \
+    && chmod a+x `which pnpm` \
     \
     \
     && `# User management for entrypoint` \
@@ -45,5 +42,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/www/* /var/cache/* /home/.composer/cache
+
+WORKDIR /srv
+
+ENTRYPOINT ["/bin/entrypoint"]
 
 CMD ["pnpm", "run", "dev", "--port", "3000", "--host", "0.0.0.0"]
